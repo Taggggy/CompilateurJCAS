@@ -1,0 +1,30 @@
+-- Programme utilisant toutes les fonctions syntaxiques
+program
+    a,b,c : -1 .. 4 ;
+    d : +2 .. +3 ;
+    T,K : array[1 .. 5] of array[1 .. 10] of integer;
+    k : a;
+begin
+    b := 3;
+    d := 0;
+    for a:=-1 to 4 do
+        d := d-1;
+    end;
+    while a<=5 do
+        d := d+1;
+    end;
+    if d>=3 then
+        write(d);
+    else
+        write("Test complet", s, f);
+        new_line;
+    end;
+    for i := 5 downto 6 do
+    	null;
+    end;
+    if not(a /= 3) and (b > 3) or (c < 4) then
+    	null;
+    end;
+    c := 3 - 4 / 5 mod 6 div 4 * 5.0e+2;
+    read(T[3]);
+end.

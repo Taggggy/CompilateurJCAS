@@ -1,0 +1,44 @@
+program
+   T,P,C: array [0 .. 20] of array[0 .. 20] of integer ;      -- Tableau d'entiers
+   i,j,k : 0 .. 20 ;                         -- Indice de tableau
+   sum : integer ;
+begin
+    for i:=1 to 3 do
+        for j:= 0 to 3 do
+            T[i][j] := i*j;
+            P[j][i] := i*(j-1*i);
+        end;
+    end;
+    
+    for i:=1 to 3 do
+        for j:=1 to 3 do
+            sum := 0;
+            for k:=1 to 3 do
+                sum:=sum+T[i][k]*P[k][j];
+            end;
+            C[i][j]:=sum;
+        end;
+    end;
+
+    for i:=1 to 3 do
+        for j:= 1 to 3 do
+            write(T[i][j]," ");
+        end;
+        new_line;
+    end;
+    new_line;
+    for i:=1 to 3 do
+        for j:= 1 to 3 do
+            write(P[i][j]," ");
+        end;
+        new_line;
+    end;
+    new_line;
+    for i:=1 to 3 do
+        for j:= 1 to 3 do
+            write(C[i][j]," ");
+        end;
+        new_line;
+    end;
+
+end.

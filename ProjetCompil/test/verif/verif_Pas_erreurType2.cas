@@ -1,0 +1,8 @@
+program
+	T : array [1 .. 5] of integer;
+	i : integer;
+begin
+	for i := false to 5 do
+		T[i] := 2 * i;
+	end;
+end.

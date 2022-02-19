@@ -1,0 +1,9 @@
+program
+	a : integer;
+	b : integer;
+	c : boolean;
+begin
+	a := 3;
+	b := 2;
+	c := a >= b;
+end.

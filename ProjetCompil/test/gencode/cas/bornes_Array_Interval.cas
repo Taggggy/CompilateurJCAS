@@ -1,0 +1,5 @@
+program
+	a : array [1 .. 5] of array [6 .. 10] of 18 .. 2;
+begin
+	a[2][8] := 3;
+end.

@@ -1,0 +1,39 @@
+program
+begin
+	if 1 < 2 then
+		write("1 < 2");
+	else
+		write("1 >= 2");
+	end;
+	new_line;
+	if 1 <= 2 then
+		write("1 <= 2");
+	else
+		write("1 > 2");
+	end;
+	new_line;
+	if 1 > 2 then
+		write("1 > 2");
+	else
+		write("1 <= 2");
+	end;
+	new_line;
+	if 1 >= 2 then
+		write("1 >= 2");
+	else
+		write("1 < 2");
+	end;
+	new_line;
+	if 1 /= 2 then
+		write("1 != 2");
+	else
+		write("1 = 2");
+	end;
+	new_line;
+	if 1 = 2 then
+		write("1 = 2");
+	else
+		write("1 != 2");
+	end;
+	new_line;
+end.

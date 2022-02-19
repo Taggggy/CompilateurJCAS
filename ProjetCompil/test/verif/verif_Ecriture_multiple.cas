@@ -1,0 +1,10 @@
+program
+	a : integer;
+	b : real;
+	c : integer;
+begin
+	a := 5;
+	b := 1.2e-3;
+	c := 3;
+	write(c, "Lecture multiple", a, b);
+end.

@@ -1,0 +1,20 @@
+program
+	a : array [1 .. 3] of integer;
+	b : array [1 .. 3] of integer;
+begin
+	a[1] := 3;
+	a[2] := 4;
+	a[3] := 7;
+	write("a[1] = ", a[1]);
+	new_line;
+	write("a[2] = ", a[2]);
+	new_line;
+	write("a[3] = ", a[3]);
+	new_line;
+	b := a;
+	write("b[1] = ", b[1]);
+	new_line;
+	write("b[2] = ", b[2]);
+	new_line;
+	write("b[3] = ", b[3]);
+end.

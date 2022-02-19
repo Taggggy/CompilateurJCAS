@@ -1,0 +1,9 @@
+program
+	a : integer;
+	i : integer;
+	b : integer;
+begin
+	a := 5;
+	i := 1;
+	b := a[i];
+end.

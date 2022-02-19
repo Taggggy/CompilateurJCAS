@@ -1,0 +1,7 @@
+program
+	a : real;
+	b : integer;
+begin
+	b := 5;
+	a := b;
+end.

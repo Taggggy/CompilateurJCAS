@@ -1,0 +1,10 @@
+program
+	a : 7 .. 12;
+begin
+	a := 8;
+	write("a = ", a);
+	new_line;
+	a := a + 8;
+	write("a = ", a);
+	new_line;
+end.

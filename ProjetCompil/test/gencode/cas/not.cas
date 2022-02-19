@@ -1,0 +1,12 @@
+program
+	a : boolean;
+begin
+	a := true;
+	a := not a;
+	if a then
+		write("true");
+	else
+		write("false");
+	end;
+	new_line;
+end.

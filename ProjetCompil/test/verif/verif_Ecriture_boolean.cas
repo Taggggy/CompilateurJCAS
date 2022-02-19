@@ -1,0 +1,5 @@
+program
+    i : boolean ;
+begin
+    write(i) ; -- write : expression de type integer, real ou chaine attendue
+end.

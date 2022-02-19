@@ -1,0 +1,7 @@
+program
+	a : 1..7;
+	b : boolean;
+begin
+	a := 6;
+	b := a;
+end.

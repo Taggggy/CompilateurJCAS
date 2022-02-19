@@ -1,0 +1,5 @@
+program
+	a : integer;
+begin
+	a := 9 div 0;
+end.

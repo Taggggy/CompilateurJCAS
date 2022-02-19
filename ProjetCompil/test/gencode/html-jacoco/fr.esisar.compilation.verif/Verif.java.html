@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Verif.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.compilation.verif</a> &gt; <span class="el_source">Verif.java</span></div><h1>Verif.java</h1><pre class="source lang-java linenums">package fr.esisar.compilation.verif;
+
+import fr.esisar.compilation.global.src.*;
+ 
+/**
+ * Cette classe permet de réaliser la vérification et la décoration 
+ * de l'arbre abstrait d'un programme.
+ */
+public class Verif {
+
+   private Environ env; // L'environnement des identificateurs
+
+   /**
+    * Constructeur.
+    */
+<span class="fc" id="L16">   public Verif() {</span>
+<span class="fc" id="L17">      env = new Environ();</span>
+<span class="fc" id="L18">   }</span>
+
+   /**
+    * Vérifie les contraintes contextuelles du programme correspondant à 
+    * l'arbre abstrait a, qui est décoré et enrichi. 
+    * Les contraintes contextuelles sont décrites 
+    * dans Context.txt.
+    * En cas d'erreur contextuelle, un message d'erreur est affiché et 
+    * l'exception ErreurVerif est levée.
+    */
+   public void verifierDecorer(Arbre a) throws ErreurVerif {
+<span class="fc" id="L29">      verifier_PROGRAMME(a);</span>
+<span class="fc" id="L30">   }</span>
+
+   /**
+    * Initialisation de l'environnement avec les identificateurs prédéfinis.
+    */
+   private void initialiserEnv() {
+      Defn def;
+      // integer
+<span class="fc" id="L38">      def = Defn.creationType(Type.Integer);</span>
+<span class="fc" id="L39">      def.setGenre(Genre.PredefInteger);</span>
+<span class="fc" id="L40">      env.enrichir(&quot;integer&quot;, def);</span>
+      
+      // ------------
+      // Définitions rajoutées ci-dessous
+      // ------------
+      
+      //Type boolean
+<span class="fc" id="L47">      def = Defn.creationType(Type.Boolean);</span>
+<span class="fc" id="L48">      def.setGenre(Genre.PredefBoolean);</span>
+<span class="fc" id="L49">      env.enrichir(&quot;boolean&quot;, def);</span>
+      
+      //false
+<span class="fc" id="L52">      def = Defn.creationConstBoolean(false);</span>
+<span class="fc" id="L53">      def.setGenre(Genre.PredefFalse);</span>
+<span class="fc" id="L54">      env.enrichir(&quot;false&quot;, def);</span>
+      
+      //true
+<span class="fc" id="L57">      def = Defn.creationConstBoolean(true);</span>
+<span class="fc" id="L58">      def.setGenre(Genre.PredefTrue);</span>
+<span class="fc" id="L59">      env.enrichir(&quot;true&quot;, def);</span>
+      
+      //max_int
+<span class="fc" id="L62">      def = Defn.creationConstInteger(java.lang.Integer.MAX_VALUE);</span>
+<span class="fc" id="L63">      def.setGenre(Genre.PredefMaxInt);</span>
+<span class="fc" id="L64">      env.enrichir(&quot;max_int&quot;, def);</span>
+      
+      //real
+<span class="fc" id="L67">      def = Defn.creationType(Type.Real);</span>
+<span class="fc" id="L68">      def.setGenre(Genre.PredefReal);</span>
+<span class="fc" id="L69">      env.enrichir(&quot;real&quot;, def);</span>
+      
+      //string
+<span class="fc" id="L72">      def = Defn.creationType(Type.String);</span>
+<span class="fc" id="L73">      env.enrichir(&quot;string&quot;, def);</span>
+<span class="fc" id="L74">   }</span>
+
+   /**************************************************************************
+    * PROGRAMME
+    **************************************************************************/
+   private void verifier_PROGRAMME(Arbre a) throws ErreurVerif {
+<span class="fc" id="L80">      initialiserEnv();</span>
+<span class="fc" id="L81">      verifier_LISTE_DECL(a.getFils1());</span>
+<span class="fc" id="L82">      verifier_LISTE_INST(a.getFils2());</span>
+<span class="fc" id="L83">   }</span>
+
+   /**************************************************************************
+    * LISTE_DECL
+    **************************************************************************/
+   private void verifier_LISTE_DECL(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L89" title="1 of 3 branches missed.">      switch(a.getNoeud()) {</span>
+      case Vide:
+<span class="fc" id="L91">    	  break;</span>
+      case ListeDecl:
+<span class="fc" id="L93">    	  verifier_LISTE_DECL(a.getFils1());</span>
+<span class="fc" id="L94">    	  verifier_DECL(a.getFils2());</span>
+<span class="fc" id="L95">    	  break;</span>
+      default:
+<span class="nc" id="L97">    	  throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_LISTE_DECL&quot;);</span>
+      }
+<span class="fc" id="L99">   }</span>
+
+/**************************************************************************
+    * LISTE_INST
+    **************************************************************************/
+   private void verifier_LISTE_INST(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L105" title="1 of 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case Vide:
+<span class="fc" id="L107">		   break;</span>
+	   case ListeInst:
+<span class="fc" id="L109">	   	  verifier_LISTE_INST(a.getFils1());</span>
+<span class="fc" id="L110">	   	  verifier_INST(a.getFils2());</span>
+<span class="fc" id="L111">	   	  break;</span>
+	   default:
+<span class="nc" id="L113">	   	  throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_LISTE_INST&quot;);</span>
+	   }
+<span class="fc" id="L115">   }</span>
+
+   // ------------------------------------------------------------------------
+   // Operations de vérifications et de décoration pour toutes 
+   // les constructions d'arbres rajoutées ci-dessous
+   // ------------------------------------------------------------------------
+   
+/**************************************************************************
+    * DECL
+    **************************************************************************/
+   private void verifier_DECL(Arbre a) throws ErreurVerif {
+<span class="fc" id="L126">		Type type = verifier_TYPE(a.getFils2());</span>
+<span class="fc" id="L127">		verifier_LIST_IDENT(a.getFils1(), type);</span>
+<span class="fc" id="L128">   }</span>
+	
+   
+/**************************************************************************
+    * TYPE
+    **************************************************************************/
+   private Type verifier_TYPE(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L135" title="1 of 4 branches missed.">		switch(a.getNoeud()) {</span>
+		case Ident:
+<span class="fc" id="L137">			return verifier_IDENT_Util(a, NatureDefn.Type);</span>
+		case Intervalle:
+<span class="fc" id="L139">			return verifier_INTERVALLE(a);</span>
+		case Tableau:
+<span class="fc" id="L141">			return verifier_TABLEAU(a);</span>
+		default:
+<span class="nc" id="L143">			throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_TYPE&quot;);</span>
+		}
+	}
+   
+
+/**************************************************************************
+    * Utilisation de IDENT
+    **************************************************************************/
+private Type verifier_IDENT_Util(Arbre a, NatureDefn... natures) throws ErreurVerif {
+<span class="fc" id="L152">	Defn identDefn = env.chercher(a.getChaine().toLowerCase());</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">	if(identDefn == null) //Si l'identificateur n'a pas été déclaré</span>
+<span class="nc" id="L154">		ErreurContext.ErreurIDManquant.leverErreurContext(&quot;: &quot; + a.getChaine(), a.getNumLigne());</span>
+	
+<span class="fc" id="L156">	boolean natureFound = false;</span>
+<span class="fc bfc" id="L157" title="All 2 branches covered.">	for(int i = 0; i &lt; natures.length; i++) {</span>
+<span class="fc bfc" id="L158" title="All 2 branches covered.">		if(identDefn.getNature() == natures[i])</span>
+<span class="fc" id="L159">			natureFound = true;</span>
+	}
+	
+<span class="pc bpc" id="L162" title="1 of 2 branches missed.">	if(!natureFound) //Si l'identificateur n'est pas de la nature attendue</span>
+<span class="nc" id="L163">		ErreurContext.ErreurNature.leverErreurContext(&quot;: &quot; + a.getChaine(), a.getNumLigne());</span>
+	
+<span class="fc" id="L165">	Decor decor = new Decor(identDefn, identDefn.getType());</span>
+<span class="fc" id="L166">	a.setDecor(decor);</span>
+	
+<span class="fc" id="L168">	return identDefn.getType();</span>
+}
+
+/**************************************************************************
+ * Déclaration de IDENT
+ **************************************************************************/
+private Type verifier_IDENT_Decl(Arbre a, Type type) throws ErreurVerif {
+<span class="fc" id="L175">	Defn identDefn = env.chercher(a.getChaine().toLowerCase());</span>
+<span class="pc bpc" id="L176" title="1 of 2 branches missed.">	if(identDefn != null) //Si l'identificateur existe déjà</span>
+	{
+<span class="nc" id="L178">		ErreurContext.ErreurIDExistant.leverErreurContext(&quot;: &quot; + a.getChaine(), a.getNumLigne());</span>
+<span class="nc" id="L179">		return null;</span>
+	}
+	else
+	{
+<span class="fc" id="L183">		env.enrichir(a.getChaine().toLowerCase(), Defn.creationVar(type));</span>
+<span class="fc" id="L184">		Decor decor = new Decor(Defn.creationVar(type), type);</span>
+<span class="fc" id="L185">		a.setDecor(decor);</span>
+<span class="fc" id="L186">		return type;</span>
+	}	
+}
+
+/**************************************************************************
+ 	* INTERVALLE
+ 	**************************************************************************/
+private Type verifier_INTERVALLE(Arbre a) throws ErreurVerif {
+<span class="fc" id="L194">	Integer borneInf = verifier_EXP_CONST(a.getFils1());</span>
+<span class="fc" id="L195">	Integer borneSup = verifier_EXP_CONST(a.getFils2());</span>
+	
+<span class="fc" id="L197">	Type intervalle = Type.creationInterval(borneInf, borneSup);</span>
+<span class="fc" id="L198">	Defn defn = Defn.creationType(intervalle);</span>
+<span class="fc" id="L199">	Decor decor = new Decor(defn, defn.getType());</span>
+<span class="fc" id="L200">	a.setDecor(decor);</span>
+<span class="fc" id="L201">	return intervalle;</span>
+}
+
+/**************************************************************************
+	* EXP_CONST
+	**************************************************************************/
+private Integer verifier_EXP_CONST(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L208" title="4 of 5 branches missed.">	switch(a.getNoeud()) {</span>
+	case Ident:
+<span class="nc" id="L210">		verifier_IDENT_Util(a, NatureDefn.ConstInteger);</span>
+<span class="nc" id="L211">		return a.getDecor().getDefn().getValeurInteger();</span>
+	case Entier:
+<span class="fc" id="L213">		Decor decor = new Decor(Type.Integer);</span>
+<span class="fc" id="L214">		a.setDecor(decor);</span>
+<span class="fc" id="L215">		return a.getEntier();</span>
+	case PlusUnaire:
+<span class="nc" id="L217">		return verifier_PlusUnaire(a);</span>
+	case MoinsUnaire:
+<span class="nc" id="L219">		return verifier_MoinsUnaire(a);</span>
+	default:
+<span class="nc" id="L221">		throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_EXP_CONST&quot;);</span>
+	}
+}
+
+/**************************************************************************
+ 	* PlusUnaire
+ 	**************************************************************************/
+private Integer verifier_PlusUnaire(Arbre a) throws ErreurVerif {
+<span class="nc" id="L229">	Integer valeur = verifier_EXP_CONST(a.getFils1());</span>
+<span class="nc" id="L230">	Decor decor = new Decor(a.getFils1().getDecor().getType());</span>
+<span class="nc" id="L231">	a.setDecor(decor);</span>
+<span class="nc" id="L232">	return valeur;</span>
+}
+
+/**************************************************************************
+	* MoinsUnaire
+	**************************************************************************/
+private Integer verifier_MoinsUnaire(Arbre a) throws ErreurVerif {
+<span class="nc" id="L239">	Integer valeur = verifier_EXP_CONST(a.getFils1());</span>
+<span class="nc" id="L240">	Decor decor = new Decor(a.getFils1().getDecor().getType());</span>
+<span class="nc" id="L241">	a.setDecor(decor);</span>
+<span class="nc" id="L242">	return -valeur;</span>
+}
+
+/**************************************************************************
+ 	* TABLEAU
+ 	**************************************************************************/
+private Type verifier_TABLEAU(Arbre a) throws ErreurVerif {
+<span class="fc" id="L249">	Type typeIndice = verifier_INTERVALLE(a.getFils1());</span>
+<span class="fc" id="L250">	Type typeElement = verifier_TYPE(a.getFils2());</span>
+<span class="fc" id="L251">	Type tableau = Type.creationArray(typeIndice, typeElement);</span>
+	
+<span class="fc" id="L253">	Defn defn = Defn.creationType(tableau);</span>
+	
+<span class="fc" id="L255">	Decor decor = new Decor(defn, defn.getType());</span>
+<span class="fc" id="L256">	a.setDecor(decor);</span>
+<span class="fc" id="L257">	return tableau;</span>
+}
+
+/**************************************************************************
+    * LISTE_IDENT
+    **************************************************************************/
+   private void verifier_LIST_IDENT(Arbre a, Type type) throws ErreurVerif {
+<span class="pc bpc" id="L264" title="1 of 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case ListeIdent:
+<span class="fc" id="L266">		   verifier_LIST_IDENT(a.getFils1(), type);</span>
+<span class="fc" id="L267">		   verifier_IDENT_Decl(a.getFils2(), type);</span>
+<span class="fc" id="L268">		   break;</span>
+	   case Vide:
+<span class="fc" id="L270">		   break;</span>
+	   default:
+<span class="nc" id="L272">		   throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_LISTE_IDENT&quot;);</span>
+	   }
+<span class="fc" id="L274">	}</span>
+   
+/**************************************************************************
+    * INST
+    **************************************************************************/
+   private void verifier_INST(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L280" title="1 of 9 branches missed.">		switch(a.getNoeud()) {</span>
+		case Nop:
+<span class="fc" id="L282">			break;</span>
+		case Affect:
+<span class="fc" id="L284">			verifier_Affect(a);</span>
+<span class="fc" id="L285">			break;</span>
+		case Pour:
+<span class="fc" id="L287">			verifier_Pour(a);</span>
+<span class="fc" id="L288">			break;</span>
+		case TantQue:
+<span class="fc" id="L290">			verifier_TantQue(a);</span>
+<span class="fc" id="L291">			break;</span>
+		case Si:
+<span class="fc" id="L293">			verifier_Si(a);</span>
+<span class="fc" id="L294">			break;</span>
+		case Lecture:
+<span class="fc" id="L296">			verifier_Lecture(a);</span>
+<span class="fc" id="L297">			break;</span>
+		case Ecriture:
+<span class="fc" id="L299">			verifier_Ecriture(a);</span>
+<span class="fc" id="L300">			break;</span>
+		case Ligne:
+<span class="fc" id="L302">			break;</span>
+		default:
+<span class="nc" id="L304">			throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_INST&quot;);</span>
+		}	
+<span class="fc" id="L306">	}</span>
+
+/**************************************************************************
+    * Affect
+    **************************************************************************/
+	private void verifier_Affect(Arbre a) throws ErreurVerif {
+<span class="fc" id="L312">		verifier_PLACE(a.getFils1());</span>
+<span class="fc" id="L313">		verifier_EXP(a.getFils2());</span>
+		
+<span class="fc" id="L315">		Type typePlace = a.getFils1().getDecor().getType();</span>
+<span class="fc" id="L316">		Type typeExp = a.getFils2().getDecor().getType();</span>
+		
+<span class="fc" id="L318">		ResultatAffectCompatible compatible = ReglesTypage.affectCompatible(typePlace, typeExp);</span>
+<span class="pc bpc" id="L319" title="1 of 2 branches missed.">		if(compatible.getOk()) {</span>
+<span class="fc bfc" id="L320" title="All 2 branches covered.">			if(compatible.getConv2()) {</span>
+				//Si ResultatAffectCompatible indique qu'il faut effectuer une conversion
+				//On crée un noeud conversion que l'on insère au bon endroit
+<span class="fc" id="L323">				a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));</span>
+<span class="fc" id="L324">				Decor decor = new Decor(Type.Real);</span>
+<span class="fc" id="L325">				a.getFils2().setDecor(decor);</span>
+<span class="fc" id="L326">			}</span>
+		}
+		else
+<span class="nc" id="L329">			ErreurContext.ErreurType.leverErreurContext(&quot;&quot;, a.getNumLigne());</span>
+<span class="fc" id="L330">	} </span>
+	
+/**************************************************************************
+    * Binaire
+    **************************************************************************/
+	private void verifier_Binaire(Arbre a) throws ErreurVerif {
+<span class="fc" id="L336">		verifier_EXP(a.getFils1());</span>
+<span class="fc" id="L337">		verifier_EXP(a.getFils2());</span>
+<span class="fc" id="L338">		Type typeExp1 = a.getFils1().getDecor().getType();</span>
+<span class="fc" id="L339">		Type typeExp2 = a.getFils2().getDecor().getType();</span>
+		
+<span class="fc" id="L341">		ResultatBinaireCompatible compatible = ReglesTypage.binaireCompatible(a.getNoeud(), typeExp1, typeExp2);</span>
+<span class="pc bpc" id="L342" title="1 of 2 branches missed.">		if(compatible.getOk()) {</span>
+			//On rajoute un noeud conversion si ResultatBinaireCompatible le demande
+<span class="fc bfc" id="L344" title="All 2 branches covered.">			if(compatible.getConv1()) {</span>
+<span class="fc" id="L345">				a.setFils1(Arbre.creation1(Noeud.Conversion, a.getFils1(), a.getFils1().getNumLigne()));</span>
+<span class="fc" id="L346">				Decor decor = new Decor(Type.Real);</span>
+<span class="fc" id="L347">				a.getFils1().setDecor(decor);</span>
+				
+<span class="fc" id="L349">			}</span>
+<span class="fc bfc" id="L350" title="All 2 branches covered.">			else if(compatible.getConv2()) {</span>
+<span class="fc" id="L351">				a.setFils2(Arbre.creation1(Noeud.Conversion, a.getFils2(), a.getFils2().getNumLigne()));</span>
+<span class="fc" id="L352">				Decor decor = new Decor(Type.Real);</span>
+<span class="fc" id="L353">				a.getFils2().setDecor(decor);</span>
+			}
+<span class="fc" id="L355">			Decor decor = new Decor(compatible.getTypeRes());</span>
+<span class="fc" id="L356">			a.setDecor(decor);</span>
+<span class="fc" id="L357">		}</span>
+		else
+<span class="nc" id="L359">			ErreurContext.ErreurType.leverErreurContext(&quot;&quot;, a.getNumLigne());</span>
+<span class="fc" id="L360">	} </span>
+
+/**************************************************************************
+    * Unaire
+    **************************************************************************/
+	private void verifier_Unaire(Arbre a) throws ErreurVerif {
+<span class="fc" id="L366">		verifier_EXP(a.getFils1());</span>
+		
+<span class="fc" id="L368">		Type typeExp = a.getFils1().getDecor().getType();</span>
+		
+<span class="fc" id="L370">		ResultatUnaireCompatible compatible = ReglesTypage.unaireCompatible(a.getNoeud(), typeExp);</span>
+<span class="pc bpc" id="L371" title="1 of 2 branches missed.">		if(compatible.getOk()) {</span>
+<span class="fc" id="L372">			Decor decor = new Decor(compatible.getTypeRes());</span>
+<span class="fc" id="L373">			a.setDecor(decor);</span>
+<span class="fc" id="L374">		}</span>
+		else
+<span class="nc" id="L376">			ErreurContext.ErreurType.leverErreurContext(&quot;&quot;, a.getNumLigne());</span>
+<span class="fc" id="L377">	} </span>
+	
+/**************************************************************************
+    * Pour
+    **************************************************************************/
+	private void verifier_Pour(Arbre a) throws ErreurVerif {
+<span class="fc" id="L383">		verifier_PAS(a.getFils1());</span>
+<span class="fc" id="L384">		verifier_LISTE_INST(a.getFils2());</span>
+<span class="fc" id="L385">	}</span>
+	
+/**************************************************************************
+	* TantQue
+	**************************************************************************/
+	private void verifier_TantQue(Arbre a) throws ErreurVerif {
+<span class="fc" id="L391">		verifier_EXP(a.getFils1());</span>
+<span class="pc bpc" id="L392" title="1 of 2 branches missed.">		if(a.getFils1().getDecor().getType() != Type.Boolean)</span>
+<span class="nc" id="L393">			ErreurContext.ErreurType.leverErreurContext(&quot; : type Boolean attendu&quot;, a.getNumLigne());</span>
+<span class="fc" id="L394">		verifier_LISTE_INST(a.getFils2());</span>
+<span class="fc" id="L395">	}</span>
+	
+/**************************************************************************
+	* Si
+	**************************************************************************/
+	private void verifier_Si(Arbre a) throws ErreurVerif {
+<span class="fc" id="L401">		verifier_EXP(a.getFils1());</span>
+<span class="pc bpc" id="L402" title="1 of 2 branches missed.">		if(a.getFils1().getDecor().getType() != Type.Boolean)</span>
+<span class="nc" id="L403">			ErreurContext.ErreurType.leverErreurContext(&quot; : type Boolean attendu&quot;, a.getNumLigne());</span>
+<span class="fc" id="L404">		verifier_LISTE_INST(a.getFils2());</span>
+<span class="fc" id="L405">		verifier_LISTE_INST(a.getFils3());</span>
+<span class="fc" id="L406">	}</span>
+	
+/**************************************************************************
+	* Lecture
+	**************************************************************************/
+	private void verifier_Lecture(Arbre a) throws ErreurVerif {
+<span class="fc" id="L412">		verifier_PLACE(a.getFils1());</span>
+<span class="fc" id="L413">		Type typePlace = a.getFils1().getDecor().getType();</span>
+<span class="pc bpc" id="L414" title="1 of 4 branches missed.">		if(typePlace != Type.Real &amp;&amp; typePlace.getNature() != NatureType.Interval)</span>
+<span class="nc" id="L415">			ErreurContext.ErreurType.leverErreurContext(&quot;: &quot; + a.getFils1().getChaine() + &quot; : type Real ou Interval attendu&quot;, a.getNumLigne());</span>
+<span class="fc" id="L416">	}</span>
+	
+/**************************************************************************
+	* Ecriture
+	**************************************************************************/
+	private void verifier_Ecriture(Arbre a) throws ErreurVerif {
+<span class="fc" id="L422">		verifier_LISTE_EXP(a.getFils1());</span>
+		//a = a.getFils1();
+		do {
+<span class="fc" id="L425">			a = a.getFils1();</span>
+<span class="fc" id="L426">			NatureType natureExpression = a.getFils2().getDecor().getType().getNature();</span>
+<span class="pc bpc" id="L427" title="1 of 6 branches missed.">			if(natureExpression != NatureType.Real &amp;&amp; natureExpression != NatureType.String &amp;&amp; natureExpression != NatureType.Interval)</span>
+<span class="nc" id="L428">				ErreurContext.ErreurType.leverErreurContext(&quot;: &quot; + a.getFils2().getChaine() + &quot; : type Real, String ou Interval attendu&quot;, a.getNumLigne());</span>
+			
+<span class="fc bfc" id="L430" title="All 2 branches covered.">		}while(a.getFils1().getNoeud() != Noeud.Vide);</span>
+<span class="fc" id="L431">	}</span>
+
+/**************************************************************************
+	* PLACE
+	**************************************************************************/
+	private void verifier_PLACE(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L437" title="1 of 3 branches missed.">		switch(a.getNoeud())</span>
+		{
+		case Ident:
+<span class="fc" id="L440">			verifier_IDENT_Util(a, NatureDefn.Var);</span>
+<span class="fc" id="L441">			break;</span>
+		case Index:
+<span class="fc" id="L443">			verifier_Index(a);</span>
+<span class="fc" id="L444">			break;</span>
+		default:
+<span class="nc" id="L446">			throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_PLACE&quot;);</span>
+		}
+<span class="fc" id="L448">	} </span>
+	
+/**************************************************************************
+	* Index
+	**************************************************************************/
+	private void verifier_Index(Arbre a) throws ErreurVerif {
+<span class="fc" id="L454">		verifier_PLACE(a.getFils1());</span>
+<span class="fc" id="L455">		verifier_EXP(a.getFils2());</span>
+		
+<span class="fc" id="L457">		NatureType natureArray = a.getFils1().getDecor().getType().getNature();</span>
+<span class="pc bpc" id="L458" title="1 of 2 branches missed.">		if(natureArray != NatureType.Array) {</span>
+<span class="nc bnc" id="L459" title="All 2 branches missed.">			if(a.getFils1().getNoeud().equals(Noeud.Ident))</span>
+<span class="nc" id="L460">				ErreurContext.ErreurType.leverErreurContext(&quot;: &quot; + a.getFils1().getChaine() + &quot; : type Array attendu&quot;, a.getNumLigne());</span>
+			else
+<span class="nc" id="L462">				ErreurContext.ErreurType.leverErreurContext(&quot;: &quot; + &quot; indexation trouvée&quot; + &quot; : type Array attendu&quot;, a.getNumLigne());</span>
+		}
+		
+<span class="fc" id="L465">		NatureType natureInterval = a.getFils2().getDecor().getType().getNature();</span>
+<span class="pc bpc" id="L466" title="1 of 2 branches missed.">		if(natureInterval != NatureType.Interval) {</span>
+<span class="nc bnc" id="L467" title="All 2 branches missed.">			if(natureInterval == NatureType.Real)</span>
+<span class="nc" id="L468">				ErreurContext.ErreurType.leverErreurContext(&quot;: &quot; + a.getFils2().getReel() + &quot; : type Interval attendu&quot;, a.getNumLigne());</span>
+			else
+<span class="nc" id="L470">				ErreurContext.ErreurType.leverErreurContext(&quot;: &quot; + a.getFils2().getChaine() + &quot; : type Interval attendu&quot;, a.getNumLigne());</span>
+		}
+	
+<span class="fc" id="L473">		Decor decor = new Decor(a.getFils1().getDecor().getType().getElement());</span>
+<span class="fc" id="L474">		a.setDecor(decor);</span>
+<span class="fc" id="L475">	}</span>
+	
+/**************************************************************************
+	* PAS
+	**************************************************************************/
+	private void verifier_PAS(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L481" title="1 of 2 branches missed.">		switch(a.getNoeud()) {</span>
+		case Increment:
+		case Decrement:
+<span class="fc" id="L484">			verifier_IDENT_Util(a.getFils1(), NatureDefn.Var);</span>
+<span class="fc" id="L485">			verifier_EXP(a.getFils2());</span>
+<span class="fc" id="L486">			verifier_EXP(a.getFils3());</span>
+			
+<span class="fc" id="L488">			NatureType natureInterval = a.getFils1().getDecor().getType().getNature();</span>
+<span class="pc bpc" id="L489" title="1 of 2 branches missed.">			if(natureInterval != NatureType.Interval)</span>
+<span class="nc" id="L490">				ErreurContext.ErreurType.leverErreurContext(&quot; : type Interval attendu pour l'identificateur&quot;, a.getNumLigne());</span>
+<span class="fc" id="L491">			natureInterval = a.getFils2().getDecor().getType().getNature();</span>
+<span class="pc bpc" id="L492" title="1 of 2 branches missed.">			if(natureInterval != NatureType.Interval)</span>
+<span class="nc" id="L493">				ErreurContext.ErreurType.leverErreurContext(&quot; : type Interval attendu à gauche&quot;, a.getNumLigne());</span>
+<span class="fc" id="L494">			natureInterval = a.getFils3().getDecor().getType().getNature();</span>
+<span class="pc bpc" id="L495" title="1 of 2 branches missed.">			if(natureInterval != NatureType.Interval)</span>
+<span class="nc" id="L496">				ErreurContext.ErreurType.leverErreurContext(&quot; : type Interval attendu à droite&quot;, a.getNumLigne());</span>
+			break;
+		default:
+<span class="nc" id="L499">			throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_PAS&quot;);</span>
+		}
+<span class="fc" id="L501">	}</span>
+	
+/**************************************************************************
+	* EXP
+	**************************************************************************/
+	private void verifier_EXP(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L507" title="1 of 9 branches missed.">		switch(a.getNoeud()) {</span>
+		case Et:
+		case Ou:
+		case Egal:
+		case InfEgal:
+		case SupEgal:
+		case NonEgal:
+		case Inf:
+		case Sup:
+		case Plus:
+		case Moins:
+		case Mult:
+		case DivReel:
+		case Reste:
+		case Quotient:
+<span class="fc" id="L522">			verifier_EXP(a.getFils1());</span>
+<span class="fc" id="L523">			verifier_EXP(a.getFils2());</span>
+<span class="fc" id="L524">			verifier_Binaire(a);</span>
+<span class="fc" id="L525">			break;</span>
+		case Index:
+<span class="fc" id="L527">			verifier_Index(a);</span>
+<span class="fc" id="L528">			break;</span>
+		case PlusUnaire:
+		case MoinsUnaire:
+		case Non:
+<span class="fc" id="L532">			verifier_EXP(a.getFils1());</span>
+<span class="fc" id="L533">			verifier_Unaire(a);</span>
+<span class="fc" id="L534">			break;</span>
+		case Entier:
+<span class="fc" id="L536">			Defn defInteger = Defn.creationConstInteger(a.getEntier());</span>
+<span class="fc" id="L537">			a.setDecor(new Decor(defInteger, defInteger.getType()));</span>
+<span class="fc" id="L538">			break;</span>
+		case Reel:
+<span class="fc" id="L540">			a.setDecor(new Decor(Type.Real));</span>
+<span class="fc" id="L541">			break;</span>
+		case Chaine:
+<span class="fc" id="L543">			a.setDecor(new Decor(Type.String));</span>
+<span class="fc" id="L544">			break;</span>
+		case Ident:
+<span class="fc" id="L546">			verifier_IDENT_Util(a, NatureDefn.Var, NatureDefn.ConstInteger, NatureDefn.ConstBoolean);</span>
+<span class="fc" id="L547">			break;</span>
+		case Conversion:
+<span class="fc" id="L549">			a.setDecor(new Decor(Type.Real));</span>
+<span class="fc" id="L550">			break;</span>
+		default:
+<span class="nc" id="L552">			throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_EXP&quot;);</span>
+		}
+<span class="fc" id="L554">	}</span>
+	
+/**************************************************************************
+	* LISTE_EXP
+	**************************************************************************/
+	private void verifier_LISTE_EXP(Arbre a) throws ErreurVerif {
+<span class="pc bpc" id="L560" title="1 of 3 branches missed.">		switch(a.getNoeud()) {</span>
+		case Vide:
+<span class="fc" id="L562">			break;</span>
+		case ListeExp:
+<span class="fc" id="L564">			verifier_LISTE_EXP(a.getFils1());</span>
+<span class="fc" id="L565">			verifier_EXP(a.getFils2());</span>
+<span class="fc" id="L566">			break;</span>
+		default:
+<span class="nc" id="L568">			throw new ErreurInterneVerif(&quot;Arbre incorrect dans verifier_LISTE_EXP&quot;);</span>
+		}
+<span class="fc" id="L570">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

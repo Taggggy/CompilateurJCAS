@@ -1,0 +1,8 @@
+program
+	a : array[1..5] of 1..5;
+	b : array[1..5] of integer;
+begin
+	b[1] := 42;
+	a := b;
+	write(a[1]);
+end.

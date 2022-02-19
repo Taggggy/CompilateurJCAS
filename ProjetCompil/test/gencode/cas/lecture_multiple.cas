@@ -1,0 +1,19 @@
+program
+	a : integer;
+	b : real;
+	c : integer;
+	d : real;
+begin
+	write("integer a = ?");
+	new_line;
+	read(a);
+	write("real b = ?");
+	new_line;
+	read(b);
+	write("integer c = ?");
+	new_line;
+	read(c);
+	write("real d = ?");
+	new_line;
+	read(d);
+end.

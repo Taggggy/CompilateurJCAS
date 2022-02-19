@@ -1,0 +1,37 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #0 
+   BOV debordementpile 
+   ADDSP #0 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; -----------------------------Ecriture : 3-----------------------------
+   WSTR "5%2 = " 
+; ------------------------Chargement, ligne : 3-------------------------
+   LOAD #5, R1 
+; ------------------------Chargement, ligne : 3-------------------------
+   LOAD #2, R14 
+   MOD R14, R1 
+   BOV debordementarithmetique 
+   WINT 
+; -----------------------------new_line : 4-----------------------------
+   WNL 
+; -----------------------------Ecriture : 5-----------------------------
+   WSTR "6%2 = " 
+; ------------------------Chargement, ligne : 5-------------------------
+   LOAD #6, R1 
+; ------------------------Chargement, ligne : 5-------------------------
+   LOAD #2, R14 
+   MOD R14, R1 
+   BOV debordementarithmetique 
+   WINT 
+; -----------------------------new_line : 6-----------------------------
+   WNL 
+   HALT 
+debordementarithmetique: 
+   WSTR "Erreur - Debordement arithmetique" 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

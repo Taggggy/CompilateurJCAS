@@ -1,0 +1,15 @@
+program
+	a : array [1 .. 5] of integer;
+	b : integer;
+	i : 1 .. 5;
+begin
+	b := 0;
+	for i:=1 to 5 do
+		a[i] := i;
+	end;
+	for i:=1 to 5 do
+		b := b + a[i];
+	end;
+	write("b = ", b);
+	new_line;
+end.	

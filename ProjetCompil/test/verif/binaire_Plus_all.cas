@@ -1,0 +1,26 @@
+program
+        a : real;
+        b : real;
+        c : 1..6;
+        d : 1..6;
+        e : real;
+begin
+        a := 2.0;
+        b := 5.0;
+        c := 3;
+        d := 3;
+        e := a + b; -- real / real
+        e := b + c; -- real / interval
+        e := c + d; -- interval / interval
+        e := d + a; -- interval / real
+
+        e := a - b; -- real / real
+        e := b - c; -- real / interval
+        e := c - d; -- interval / interval
+        e := d - a; -- interval / real
+
+        e := a * b; -- real / real
+        e := b * c; -- real / interval
+        e := c * d; -- interval / interval
+        e := d * a; -- interval / real
+end.

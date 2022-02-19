@@ -1,0 +1,7 @@
+program
+	a : 1..5;
+	b : 1..2;
+begin
+	a := 1;
+	b := a;
+end.

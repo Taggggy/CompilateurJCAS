@@ -1,0 +1,201 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #3 
+   BOV debordementpile 
+   ADDSP #3 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; ------------------------------Affect : 6------------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 6-------------------------
+   LOAD #3, R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; ------------------------------Affect : 7------------------------------
+   LOAD #2, R0 
+; ------------------------Chargement, ligne : 7-------------------------
+   LOAD #4, R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; ------------------------------Affect : 8------------------------------
+   LOAD #3, R0 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R1 
+   FLOAT R1, R1 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R14 
+   FLOAT R14, R14 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R3 
+   FLOAT R3, R3 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R6 
+   FLOAT R6, R6 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R10 
+   FLOAT R10, R10 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R15 
+   FLOAT R15, R15 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R12 
+   FLOAT R12, R12 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R13 
+   FLOAT R13, R13 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R4 
+   FLOAT R4, R4 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R7 
+   FLOAT R7, R7 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R5 
+   FLOAT R5, R5 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R9 
+   FLOAT R9, R9 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R8 
+   FLOAT R8, R8 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD #2, R11 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+; ----------------------------Stockage temp-----------------------------
+   STORE R11, 4(GB) 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 2(GB), R11 
+   FLOAT R11, R11 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R11, 5(GB) 
+   FLOAT 4(GB), R11 
+   STORE R11, 4(GB) 
+   LOAD 5(GB), R11 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   DIV 4(GB), R11 
+   BOV debordementarithmetique 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+; ----------------------------Stockage temp-----------------------------
+   STORE R11, 4(GB) 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R11 
+   FLOAT R11, R11 
+   ADD 4(GB), R11 
+   BOV debordementarithmetique 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+; ----------------------------Stockage temp-----------------------------
+   STORE R11, 4(GB) 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R11 
+   FLOAT R11, R11 
+   ADD 4(GB), R11 
+   BOV debordementarithmetique 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+; ----------------------------Stockage temp-----------------------------
+   STORE R11, 4(GB) 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R11 
+   FLOAT R11, R11 
+   ADD 4(GB), R11 
+   BOV debordementarithmetique 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+; ----------------------------Stockage temp-----------------------------
+   STORE R11, 4(GB) 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R11 
+   FLOAT R11, R11 
+   ADD 4(GB), R11 
+   BOV debordementarithmetique 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+; ----------------------------Stockage temp-----------------------------
+   STORE R11, 4(GB) 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD 1(GB), R11 
+   FLOAT R11, R11 
+   ADD 4(GB), R11 
+   BOV debordementarithmetique 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   ADD R11, R8 
+   BOV debordementarithmetique 
+   ADD R8, R9 
+   BOV debordementarithmetique 
+   ADD R9, R5 
+   BOV debordementarithmetique 
+   ADD R5, R7 
+   BOV debordementarithmetique 
+   ADD R7, R4 
+   BOV debordementarithmetique 
+   ADD R4, R13 
+   BOV debordementarithmetique 
+   ADD R13, R12 
+   BOV debordementarithmetique 
+   ADD R12, R15 
+   BOV debordementarithmetique 
+   ADD R15, R10 
+   BOV debordementarithmetique 
+   ADD R10, R6 
+   BOV debordementarithmetique 
+   ADD R6, R3 
+   BOV debordementarithmetique 
+   ADD R3, R14 
+   BOV debordementarithmetique 
+   ADD R14, R1 
+   BOV debordementarithmetique 
+   STORE R1, 0(GB, R0) 
+; -----------------------------Ecriture : 9-----------------------------
+   WSTR "c = " 
+; ------------------------Chargement, ligne : 9-------------------------
+   LOAD 3(GB), R1 
+   WFLOAT 
+; ----------------------------new_line : 10-----------------------------
+   WNL 
+   HALT 
+debordementarithmetique: 
+   WSTR "Erreur - Debordement arithmetique" 
+   HALT 
+debordementintervalle: 
+   WSTR "Erreur - Debordement d'intervalle" 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

@@ -1,0 +1,7 @@
+program
+	a : integer;
+	b : array [1 .. 5] of integer;
+	c : array [1 .. 5] of array [1 .. 5] of integer;
+begin
+	null;
+end.

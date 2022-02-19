@@ -1,0 +1,28 @@
+program
+    size : 8190..8190;
+    k, prime, count : integer;
+    Flags : array [0 .. 8190] of boolean;
+    i : 1 .. 8190;
+    Iter : 1 .. 10;
+begin
+    size := 8190;
+    count := 0;
+       
+    for i:=0 to size do
+        Flags[i] := true;
+    end;
+    
+    for i:=0 to size do
+        if Flags[i] then
+            prime := i+i+3;
+            k := i+prime;
+            while (k<=size) do
+                Flags[k] := false;
+                k := k+prime;
+            end;
+            count := count + 1;
+        end;
+    end;    
+    
+    write(count," est un nombre premier");
+end.

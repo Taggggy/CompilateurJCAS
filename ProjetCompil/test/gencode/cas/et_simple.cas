@@ -1,0 +1,37 @@
+program
+	a : boolean;
+	b : boolean;
+        c : boolean;
+begin
+	a := true;
+	b := false;
+        c := a and a;
+        if c then
+            write("reussi true and true");
+        else
+            write("echec true and true");
+        end;
+        new_line;
+        c := a and b;
+        if c then
+            write("echec true and false");
+        else
+            write("reussi true and false");
+        end;
+        new_line;
+        c := b and a;
+        if c then
+            write("echec false and true");
+        else
+            write("reussi false and true");
+        end;
+        new_line;
+        c := b and b;
+        if c then
+            write("echec false and false");
+        else
+            write("reussi false and false");
+        end;
+
+        new_line;
+end.

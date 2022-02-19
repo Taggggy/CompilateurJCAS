@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Generation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.compilation.gencode</a> &gt; <span class="el_source">Generation.java</span></div><h1>Generation.java</h1><pre class="source lang-java linenums">package fr.esisar.compilation.gencode;
+
+import fr.esisar.compilation.global.src.*;
+import fr.esisar.compilation.global.src3.*;
+
+/**
+ * Génération de code pour un programme JCas à partir d'un arbre décoré.
+ */
+
+<span class="nc" id="L10">class Generation {</span>
+   
+   /**
+    * Méthode principale de génération de code.
+    * Génère du code pour l'arbre décoré a.
+    */
+   static Prog coder(Arbre a) {
+<span class="nc" id="L17">      Prog.ajouterGrosComment(&quot;Programme généré par JCasc&quot;);</span>
+
+      // -----------
+      // A COMPLETER
+      // -----------
+<span class="nc" id="L22">      Generation generator = new Generation();</span>
+<span class="nc" id="L23">      Pile.reset();</span>
+<span class="nc" id="L24">      Registres.reset();</span>
+<span class="nc" id="L25">      generator.coder_LISTE_DECL(a.getFils1());</span>
+<span class="nc" id="L26">      generator.coder_LISTE_INST(a.getFils2());</span>
+      
+      // Fin du programme
+      // L'instruction &quot;HALT&quot;
+<span class="nc" id="L30">      Inst inst = Inst.creation0(Operation.HALT);</span>
+      // On ajoute l'instruction à la fin du programme
+<span class="nc" id="L32">      Prog.ajouter(inst);</span>
+<span class="nc" id="L33">      Erreur erreur = new Erreur(); erreur.ecrireErreurs();</span>
+      // On retourne le programme assembleur généré
+<span class="nc" id="L35">      return Prog.instance(); </span>
+   }
+   
+   private void coder_LISTE_DECL(Arbre a) {
+<span class="nc bnc" id="L39" title="All 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case ListeDecl:
+<span class="nc" id="L41">		   coder_LISTE_DECL(a.getFils1());</span>
+<span class="nc" id="L42">		   coder_DECL(a.getFils2());</span>
+<span class="nc" id="L43">		   break;</span>
+	   case Vide:
+<span class="nc" id="L45">		   break;</span>
+	   default:
+		   break;
+	   }
+<span class="nc" id="L49">   }</span>
+   
+   private void coder_DECL(Arbre a) {
+<span class="nc" id="L52">	  coder_LISTE_IDENT(a.getFils1());</span>
+<span class="nc" id="L53">   }</span>
+   
+   private void coder_LISTE_IDENT(Arbre a) {
+<span class="nc bnc" id="L56" title="All 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case ListeIdent:
+<span class="nc" id="L58">		  coder_LISTE_IDENT(a.getFils1());</span>
+<span class="nc" id="L59">		  Pile.allocationPermanente(a.getFils2());</span>
+<span class="nc" id="L60">		  break;</span>
+	   case Vide:
+<span class="nc" id="L62">		  break;</span>
+	   default:
+		  break;
+	   }
+<span class="nc" id="L66">   }</span>
+   
+
+   private void coder_LISTE_INST(Arbre a) {
+<span class="nc bnc" id="L70" title="All 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case ListeInst:
+<span class="nc" id="L72">		   coder_LISTE_INST(a.getFils1());</span>
+<span class="nc" id="L73">		   coder_INST(a.getFils2());</span>
+<span class="nc" id="L74">		   break;</span>
+	   case Vide:
+<span class="nc" id="L76">		   break;</span>
+	   default:
+		   break;
+	   }
+<span class="nc" id="L80">   }</span>
+   
+   private void coder_INST(Arbre a) {
+<span class="nc bnc" id="L83" title="All 9 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case Nop:
+<span class="nc" id="L85">		   Prog.ajouterComment(&quot;Nop : &quot; + a.getNumLigne());</span>
+<span class="nc" id="L86">		   break;</span>
+	   case Affect:
+<span class="nc" id="L88">		   coder_Affect(a);</span>
+<span class="nc" id="L89">		   Prog.ajouterComment(&quot;Affect : &quot; + a.getNumLigne());</span>
+<span class="nc" id="L90">		   break;</span>
+	   case Pour:
+<span class="nc" id="L92">		   Prog.ajouterComment(&quot;Pour : &quot; + a.getNumLigne());</span>
+		 //TODO
+<span class="nc" id="L94">		   break;</span>
+	   case TantQue:
+<span class="nc" id="L96">		   Prog.ajouterComment(&quot;TantQue : &quot; + a.getNumLigne());</span>
+<span class="nc" id="L97">		   coder_TantQue(a);</span>
+<span class="nc" id="L98">		   break;</span>
+	   case Si:
+<span class="nc" id="L100">		   Prog.ajouterComment(&quot;Si : &quot; + a.getNumLigne());</span>
+<span class="nc" id="L101">		   coder_Si(a);</span>
+<span class="nc" id="L102">		   break;</span>
+	   case Lecture:
+<span class="nc" id="L104">		   Prog.ajouterComment(&quot;Lecture : &quot; + a.getNumLigne());</span>
+<span class="nc" id="L105">		   coder_Lecture(a.getFils1());</span>
+<span class="nc" id="L106">		   break;</span>
+	   case Ecriture:
+<span class="nc" id="L108">		   Prog.ajouterComment(&quot;Ecriture : &quot; + a.getNumLigne());</span>
+<span class="nc" id="L109">		   coder_Ecriture(a.getFils1());</span>
+<span class="nc" id="L110">		   break;</span>
+	   case Ligne:
+<span class="nc" id="L112">		   Prog.ajouterComment(&quot;new_line : &quot; + a.getNumLigne());</span>
+<span class="nc" id="L113">		   Prog.ajouter(Inst.creation0(Operation.WNL));</span>
+<span class="nc" id="L114">		   break;</span>
+	   default:
+		   break;
+	   }
+<span class="nc" id="L118">   }</span>
+   
+   private void coder_Affect(Arbre a) {
+	   //TODO
+<span class="nc" id="L122">	   Type type = coder_Place(a.getFils1(), Registre.R0);</span>
+<span class="nc" id="L123">	   coder_EXP(a.getFils2(), Registre.R1);</span>
+<span class="nc bnc" id="L124" title="All 2 branches missed.">	   if(type.getNature().equals(NatureType.Array)) {</span>
+		   //TODO Affectation composée
+	   } else {
+<span class="nc bnc" id="L127" title="All 2 branches missed.">		   if(type.getNature().equals(NatureType.Interval)) {</span>
+<span class="nc" id="L128">			   Erreur.verifDebordementIntervalle(type, Registre.R1);</span>
+		   } 
+		   //TODO Affectation simple
+<span class="nc" id="L131">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R0), Operande.creationOpIndexe(0,Registre.GB,Registre.R1)));</span>
+	   }
+<span class="nc" id="L133">   }</span>
+   
+   private void coder_TantQue(Arbre a) {
+<span class="nc" id="L136">	   Etiq conditionWhile = Etiq.nouvelle(&quot;conditionWhile&quot;);</span>
+<span class="nc" id="L137">	   Etiq debutWhile = Etiq.nouvelle(&quot;debutWhile&quot;);</span>
+	   
+<span class="nc" id="L139">	   Prog.ajouter(Inst.creation1(Operation.BRA, Operande.creationOpEtiq(conditionWhile)));</span>
+<span class="nc" id="L140">	   Prog.ajouter(debutWhile);</span>
+<span class="nc" id="L141">	   coder_LISTE_INST(a.getFils2());</span>
+<span class="nc" id="L142">	   Prog.ajouter(conditionWhile);</span>
+<span class="nc" id="L143">	   coder_Cond(a.getFils1(), true, debutWhile);</span>
+<span class="nc" id="L144">   }</span>
+
+   private void coder_Si(Arbre a) {
+<span class="nc" id="L147">	   Etiq finSi = Etiq.nouvelle(&quot;FinSi&quot;);</span>
+<span class="nc bnc" id="L148" title="All 2 branches missed.">	   	if(a.getFils3().getNoeud().equals(Noeud.Vide)) { //If sans else</span>
+<span class="nc" id="L149">	   		coder_Cond(a.getFils1(), false, finSi);</span>
+<span class="nc" id="L150">	   		coder_LISTE_INST(a.getFils2());</span>
+	   	} else {
+<span class="nc" id="L152">	   		Etiq sinon = Etiq.nouvelle(&quot;Sinon&quot;);</span>
+<span class="nc" id="L153">	   		coder_Cond(a.getFils1(), false, sinon);</span>
+<span class="nc" id="L154">	   		coder_LISTE_INST(a.getFils2());</span>
+<span class="nc" id="L155">	   		Prog.ajouter(Inst.creation1(Operation.BRA, Operande.creationOpEtiq(finSi)));</span>
+<span class="nc" id="L156">	   		Prog.ajouter(sinon);</span>
+<span class="nc" id="L157">	   		coder_LISTE_INST(a.getFils3());</span>
+	   	}
+<span class="nc" id="L159">	   	Prog.ajouter(finSi);</span>
+<span class="nc" id="L160">   }</span>
+
+
+   private void coder_Lecture(Arbre a) {
+<span class="nc bnc" id="L164" title="All 3 branches missed.">	   switch(a.getDecor().getType().getNature()) {</span>
+	   	case Real:
+<span class="nc" id="L166">	   	   Prog.ajouterComment(&quot;Read real&quot;);</span>
+<span class="nc" id="L167">		   Prog.ajouter(Inst.creation0(Operation.RFLOAT));</span>
+<span class="nc" id="L168">		   Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementPile&quot;))));</span>
+<span class="nc" id="L169">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R1), Operande.creationOpIndirect(Pile.getAddress(a.getChaine()),Registre.GB)));</span>
+<span class="nc" id="L170">		   break;</span>
+	   	case Interval:
+<span class="nc" id="L172">		   Prog.ajouterComment(&quot;Read int&quot;);</span>
+<span class="nc" id="L173">		   Prog.ajouter(Inst.creation0(Operation.RINT));</span>
+<span class="nc" id="L174">		   Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementPile&quot;))));</span>
+<span class="nc" id="L175">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R1), Operande.creationOpIndirect(Pile.getAddress(a.getChaine()),Registre.GB)));  </span>
+<span class="nc" id="L176">		   break;</span>
+	   	default:
+		   break;
+	   }
+<span class="nc" id="L180">   }</span>
+   
+   private void coder_Ecriture(Arbre a) {
+<span class="nc bnc" id="L183" title="All 2 branches missed.">	   while(a.getNoeud() != Noeud.Vide) {</span>
+<span class="nc bnc" id="L184" title="All 4 branches missed.">		   switch(a.getFils2().getDecor().getType().getNature()) {</span>
+			case String:
+<span class="nc" id="L186">				String str = a.getFils2().getChaine();</span>
+<span class="nc" id="L187">				str = str.substring(1, str.length()-1); //On y enlève les guillemets aux extrémités</span>
+<span class="nc" id="L188">				Prog.ajouter(Inst.creation1(Operation.WSTR, Operande.creationOpChaine(str)));</span>
+<span class="nc" id="L189">				break;</span>
+			case Interval:
+<span class="nc" id="L191">				coder_EXP(a, Registre.R1);</span>
+<span class="nc" id="L192">				Prog.ajouter(Inst.creation0(Operation.WINT));</span>
+<span class="nc" id="L193">				break;</span>
+			case Real:
+<span class="nc" id="L195">				coder_EXP(a, Registre.R1);</span>
+<span class="nc" id="L196">				Prog.ajouter(Inst.creation0(Operation.WFLOAT));</span>
+<span class="nc" id="L197">				break;</span>
+			default:
+				break;
+		   }
+<span class="nc" id="L201">		   a = a.getFils1();</span>
+	   }
+<span class="nc" id="L203">   }</span>
+   
+   private void genererUna(Arbre a, Registre reg) {
+<span class="nc" id="L206">	   switch(a.getNoeud()) {</span>
+	   case MoinsUnaire:
+	   case PlusUnaire:
+	   case Non:
+	   }
+<span class="nc" id="L211">   }</span>
+   
+   private void genererBinReg(Arbre a, Registre regSrc, Registre regDest) {
+<span class="nc" id="L214">	   switch(a.getNoeud()) {</span>
+	   case Et:
+	   case Ou:
+	   case Inf:
+	   case InfEgal:
+	   case Sup:
+	   case SupEgal:
+	   case NonEgal:
+	   case Egal:
+	   case DivReel:
+	   case Moins:
+		   //switch(a.getDecor().getType().getNature()) {
+	   	   //case Real:
+		   //}
+	   case Plus:
+	   case Quotient:
+	   case Reste:
+	   case Mult:
+	   }
+<span class="nc" id="L233">   }</span>
+   
+   private void genererBinPil(Arbre a, int pileAddr, Registre regDest) {
+<span class="nc" id="L236">	   switch(a.getNoeud()) {</span>
+	   case Et:
+	   case Ou:
+	   case Inf:
+	   case InfEgal:
+	   case Sup:
+	   case SupEgal:
+	   case NonEgal:
+	   case Egal:
+	   case DivReel:
+	   case Moins:
+	   case Plus:
+	   case Quotient:
+	   case Reste:
+	   case Mult:
+	   }
+<span class="nc" id="L252">   }</span>
+   
+   
+   private void coder_EXP(Arbre a, Registre reg) {
+	   //TODO
+<span class="nc bnc" id="L257" title="All 4 branches missed.">	   switch(a.getArite()) {</span>
+	   		case 0:  //Case F
+<span class="nc" id="L259">   				Prog.ajouterComment(&quot;Chargement&quot;);</span>
+<span class="nc bnc" id="L260" title="All 2 branches missed.">   				if(Pile.containsChaine(a.getChaine())) {</span>
+<span class="nc" id="L261">   	   				int pileAddr = Pile.getAddress(a.getChaine());</span>
+<span class="nc" id="L262">   					Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpIndirect(pileAddr,Registre.GB), Operande.opDirect(reg)));</span>
+<span class="nc" id="L263">   				}</span>
+   				else {
+<span class="nc bnc" id="L265" title="All 4 branches missed.">   					switch(a.getDecor().getType().getNature()) {</span>
+   					case Boolean:
+<span class="nc bnc" id="L267" title="All 2 branches missed.">   						if(a.getChaine().toLowerCase().equals(&quot;true&quot;)) { //true is 1 and false is 0</span>
+<span class="nc" id="L268">   	   						Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(1), Operande.opDirect(reg)));</span>
+   						}
+   						else {
+<span class="nc" id="L271">   	   						Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(0), Operande.opDirect(reg)));</span>
+   						}
+<span class="nc" id="L273">   						break;</span>
+   					case Interval:
+<span class="nc" id="L275">   						Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(a.getEntier()), Operande.opDirect(reg)));</span>
+<span class="nc" id="L276">   						break;</span>
+   					case Real:
+<span class="nc" id="L278">   						Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(a.getEntier()), Operande.opDirect(reg)));</span>
+<span class="nc" id="L279">   						break;</span>
+   					default:
+   						break;
+   				   }
+   				}
+	   			//
+	   		case 1: //Case OP E1
+<span class="nc" id="L286">	   			coder_EXP(a.getFils1(), reg);</span>
+<span class="nc" id="L287">	   			genererUna(a, reg);</span>
+	   		case 2: //Case E1 op E2
+<span class="nc bnc" id="L289" title="All 2 branches missed.">	   			if(a.getFils2().getArite() == 0) { //Case E1 op F</span>
+<span class="nc" id="L290">	   				coder_EXP(a.getFils1(),reg);</span>
+<span class="nc" id="L291">	   				int temp = Pile.allocationTemporaire();</span>
+<span class="nc bnc" id="L292" title="All 4 branches missed.">	   				switch(a.getDecor().getType().getNature()) {</span>
+   					case Boolean:
+<span class="nc bnc" id="L294" title="All 2 branches missed.">   						if(a.getChaine().toLowerCase().equals(&quot;true&quot;)) { //true is 1 and false is 0</span>
+<span class="nc" id="L295">   			   				Prog.ajouter(Inst.creation2(Operation.STORE, Operande.creationOpIndirect(temp,Registre.GB), Operande.creationOpEntier(1)));</span>
+   						}
+   						else {
+<span class="nc" id="L298">   			   				Prog.ajouter(Inst.creation2(Operation.STORE, Operande.creationOpIndirect(temp,Registre.GB), Operande.creationOpEntier(0)));</span>
+   						}
+<span class="nc" id="L300">   						break;</span>
+   					case Interval:
+<span class="nc" id="L302">   		   				Prog.ajouter(Inst.creation2(Operation.STORE, Operande.creationOpIndirect(temp,Registre.GB), Operande.creationOpEntier(a.getFils2().getEntier())));</span>
+<span class="nc" id="L303">   						break;</span>
+   					case Real:
+<span class="nc" id="L305">   		   				Prog.ajouter(Inst.creation2(Operation.STORE, Operande.creationOpIndirect(temp,Registre.GB), Operande.creationOpReel(a.getFils2().getReel())));</span>
+<span class="nc" id="L306">   						break;</span>
+   					default:
+   						break;
+   				   }
+<span class="nc" id="L310">	   				genererBinPil(a, temp, reg);</span>
+<span class="nc" id="L311">	   			}</span>
+	   			else { //Case E1 op E2 (and E2 not leaf)
+<span class="nc bnc" id="L313" title="All 2 branches missed.">	   				if(Registres.isFree()) {</span>
+<span class="nc" id="L314">		   				coder_EXP(a.getFils1(),reg);</span>
+<span class="nc" id="L315">		   				Registre reg2 = Registres.allouerReg();</span>
+<span class="nc" id="L316">		   				coder_EXP(a.getFils2(),reg2);</span>
+<span class="nc" id="L317">		   				genererBinReg(a,reg2,reg);</span>
+<span class="nc" id="L318">		   				Registres.liberer(reg2);</span>
+<span class="nc" id="L319">		   			}</span>
+		   			else {
+<span class="nc" id="L321">		   				coder_EXP(a.getFils2(),reg);</span>
+<span class="nc" id="L322">		   				int temp = Pile.allocationTemporaire();</span>
+<span class="nc" id="L323">		   				Prog.ajouterComment(&quot;Stockage temp&quot;);</span>
+<span class="nc" id="L324">		   				Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(reg), Operande.creationOpIndirect(temp,Registre.GB)));</span>
+<span class="nc" id="L325">		   				coder_EXP(a.getFils1(),reg);</span>
+<span class="nc" id="L326">		   				genererBinPil(a,temp,reg);</span>
+<span class="nc" id="L327">		   				Pile.liberationTemporaire();</span>
+		   			}
+	   			}
+	   		default:
+	   			//ERREUR
+	   }	
+<span class="nc" id="L333">   }</span>
+   
+
+   private void coder_Cond(Arbre a, boolean b, Etiq etiq) {
+		// TODO Auto-generated method stub
+<span class="nc" id="L338">	}</span>
+   
+   private Type coder_Place(Arbre a, Registre reg) {
+<span class="nc bnc" id="L341" title="All 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case Ident:
+<span class="nc" id="L343">		   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(Pile.getAddress(a.getChaine())), Operande.opDirect(reg)));</span>
+<span class="nc" id="L344">		   return null;</span>
+	   case Index: //T[i1][i2]...[in]
+<span class="nc" id="L346">		   coder_Place(a.getFils1(), reg); //Calcule l'offset de T[i1][i2]...[in-1] dans le registre.</span>
+<span class="nc" id="L347">		   int size = sizeArray(a.getFils1().getDecor().getType().getElement());</span>
+<span class="nc" id="L348">		   Registre expReg = Registres.allouerReg();</span>
+<span class="nc bnc" id="L349" title="All 2 branches missed.">		   if(expReg != null) {</span>
+<span class="nc" id="L350">		        coder_EXP(a.getFils2(), expReg);</span>
+<span class="nc" id="L351">		        Erreur.verifDebordementIndiceTableau(a.getFils1(), expReg);</span>
+		        
+<span class="nc" id="L353">		        Prog.ajouter(Inst.creation2(Operation.SUB, Operande.creationOpEntier(a.getFils1().getDecor().getType().getIndice().getBorneInf()), Operande.opDirect(expReg)));</span>
+<span class="nc" id="L354">		        Prog.ajouter(Inst.creation2(Operation.MUL, Operande.creationOpEntier(size), Operande.opDirect(expReg)));</span>
+<span class="nc" id="L355">		        Prog.ajouter(Inst.creation2(Operation.ADD, Operande.opDirect(expReg), Operande.opDirect(reg)));</span>
+<span class="nc" id="L356">		        Registres.liberer(expReg);</span>
+		   } else {
+<span class="nc" id="L358">		        int adresseTemporaire = Pile.allocationTemporaire();</span>
+<span class="nc" id="L359">		        Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(reg), Operande.creationOpIndirect(adresseTemporaire, Registre.GB)));</span>
+<span class="nc" id="L360">		        coder_EXP(a.getFils2(), reg);</span>
+<span class="nc" id="L361">		        Erreur.verifDebordementIndiceTableau(a.getFils1(), reg);</span>
+		        
+<span class="nc" id="L363">		        Prog.ajouter(Inst.creation2(Operation.SUB, Operande.creationOpEntier(a.getFils1().getDecor().getType().getIndice().getBorneInf()), Operande.opDirect(reg)));</span>
+<span class="nc" id="L364">		        Prog.ajouter(Inst.creation2(Operation.MUL, Operande.creationOpEntier(size), Operande.opDirect(reg)));</span>
+<span class="nc" id="L365">		        Prog.ajouter(Inst.creation2(Operation.ADD, Operande.creationOpIndirect(adresseTemporaire,Registre.LB), Operande.opDirect(reg)));</span>
+<span class="nc" id="L366">		        Pile.liberationTemporaire();</span>
+		      }
+<span class="nc" id="L368">		   return a.getDecor().getType();</span>
+	   default:
+<span class="nc" id="L370">		   return null;</span>
+	   }
+   }
+   
+   private int sizeArray(Type type) {
+<span class="nc" id="L375">	   int size = 1;</span>
+<span class="nc bnc" id="L376" title="All 2 branches missed.">	   if(type.getNature() == NatureType.Array) {</span>
+<span class="nc" id="L377">		   size = type.getIndice().getBorneSup() - type.getIndice().getBorneSup()+1;</span>
+<span class="nc" id="L378">		   return sizeArray(type.getElement())*size;</span>
+	   } else {
+<span class="nc" id="L380">		   return size;</span>
+	   }   
+   }
+}
+
+
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

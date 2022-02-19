@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Registres.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.compilation.gencode</a> &gt; <span class="el_source">Registres.java</span></div><h1>Registres.java</h1><pre class="source lang-java linenums">package fr.esisar.compilation.gencode;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import fr.esisar.compilation.global.src3.Registre;
+
+<span class="nc" id="L8">public class Registres {</span>
+	private static Map&lt;Registre, Boolean&gt; registres; //true = libre; false = alloué
+	
+	public static void reset() {
+<span class="nc" id="L12">		registres = new HashMap&lt;Registre,Boolean&gt;();</span>
+<span class="nc bnc" id="L13" title="All 2 branches missed.">		for(Registre reg : Registre.values()) {</span>
+<span class="nc" id="L14">			registres.put(reg, true);</span>
+		}
+		//Registres réservés
+<span class="nc" id="L17">		registres.put(Registre.R0, false);</span>
+<span class="nc" id="L18">		registres.put(Registre.R1, false);</span>
+<span class="nc" id="L19">	}</span>
+	
+	public static Registre allouerReg() {
+<span class="nc bnc" id="L22" title="All 2 branches missed.">		for(Registre reg : registres.keySet()) {</span>
+<span class="nc bnc" id="L23" title="All 2 branches missed.">			if(registres.get(reg)) {</span>
+<span class="nc" id="L24">				registres.put(reg, false);</span>
+<span class="nc" id="L25">				return reg;</span>
+			}
+<span class="nc" id="L27">		}</span>
+<span class="nc" id="L28">		return null;</span>
+	}
+	
+	public static void liberer(Registre reg) {
+<span class="nc" id="L32">		registres.put(reg, true);</span>
+<span class="nc" id="L33">	}</span>
+	
+	
+	public static boolean isFree() {
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		for(Registre reg : registres.keySet()) {</span>
+<span class="nc bnc" id="L38" title="All 2 branches missed.">			if(registres.get(reg)) {</span>
+<span class="nc" id="L39">				return true;</span>
+			}
+<span class="nc" id="L41">		}</span>
+<span class="nc" id="L42">		return false;</span>
+	}
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

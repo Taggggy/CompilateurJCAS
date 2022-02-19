@@ -1,0 +1,6 @@
+program
+--Chaque ligne de ce fichier se finit par des \r\n
+begin
+	null;
+end.
+

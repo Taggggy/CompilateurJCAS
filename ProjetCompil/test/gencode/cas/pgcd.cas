@@ -1,0 +1,19 @@
+program
+	a : integer;
+	b : integer;
+	t : integer;
+	x : integer;
+	y : integer;
+begin
+	read(a);
+	read(b);
+	x := a;
+	y := b;
+	while(b /= 0) do
+		t := b;
+		b := a mod b;
+		a := t;
+	end; 
+	write("Le PGCD de ", x, " et ", y, " vaut ", a);
+end.
+

@@ -1,0 +1,6 @@
+program
+	a : integer;
+begin
+	read(a);
+	new_line;
+end.

@@ -1,0 +1,10 @@
+program
+	a : real;
+begin
+	a := 9 / 3;
+	write("9/3 = ", a);
+	new_line;
+	a := 9 / 2;
+	write("9/2 = ", a);
+	new_line;
+end.

@@ -1,0 +1,15 @@
+program
+  i : 1..100;
+  j : 1..100;
+begin
+  i := 60;
+  while (i >= 50) do
+    j := 40;
+    while (j >= 30) do
+      write("i,j : ", i, ",", j);
+      new_line;
+      j := j - 1;
+    end;
+    i := i - 1;
+  end;
+end.

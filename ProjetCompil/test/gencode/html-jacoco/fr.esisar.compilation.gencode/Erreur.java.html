@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Erreur.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.compilation.gencode</a> &gt; <span class="el_source">Erreur.java</span></div><h1>Erreur.java</h1><pre class="source lang-java linenums">package fr.esisar.compilation.gencode;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import fr.esisar.compilation.global.src.Arbre;
+import fr.esisar.compilation.global.src.Type;
+import fr.esisar.compilation.global.src3.Etiq;
+import fr.esisar.compilation.global.src3.Inst;
+import fr.esisar.compilation.global.src3.Operande;
+import fr.esisar.compilation.global.src3.Operation;
+import fr.esisar.compilation.global.src3.Prog;
+import fr.esisar.compilation.global.src3.Registre;
+
+<span class="fc" id="L15">public class Erreur {</span>
+	
+	private static Map&lt;String, Boolean&gt; errorUsed;
+	private static Map&lt;String, String&gt; errorMessage;
+	
+	public static void reset() {
+<span class="fc" id="L21">		errorUsed = new HashMap&lt;String, Boolean&gt;();</span>
+<span class="fc" id="L22">		errorUsed.put(&quot;debordementIntervalle&quot;, false);</span>
+<span class="fc" id="L23">		errorUsed.put(&quot;debordementArithmetique&quot;, false);</span>
+<span class="fc" id="L24">		errorUsed.put(&quot;debordementIndiceTableau&quot;, false);</span>
+<span class="fc" id="L25">		errorUsed.put(&quot;debordementPile&quot;, false);</span>
+		
+<span class="fc" id="L27">		errorMessage = new HashMap&lt;String, String&gt;();</span>
+<span class="fc" id="L28">		errorMessage.put(&quot;debordementIntervalle&quot;, &quot;Erreur - Debordement d'intervalle&quot;);</span>
+<span class="fc" id="L29">		errorMessage.put(&quot;debordementArithmetique&quot;, &quot;Erreur - Debordement arithmetique&quot;);</span>
+<span class="fc" id="L30">		errorMessage.put(&quot;debordementIndiceTableau&quot;, &quot;Erreur - Debordement d'indice de tableau&quot;);</span>
+<span class="fc" id="L31">		errorMessage.put(&quot;debordementPile&quot;, &quot;Erreur - Debordement de pile&quot;);</span>
+<span class="fc" id="L32">	}</span>
+	
+	public void ecrireErreurs() {
+<span class="fc bfc" id="L35" title="All 2 branches covered.">		for(String error : errorUsed.keySet()) {</span>
+<span class="fc bfc" id="L36" title="All 2 branches covered.">			if(errorUsed.get(error))</span>
+<span class="fc" id="L37">				ajouterErreur(error, errorMessage.get(error));</span>
+<span class="fc" id="L38">		}</span>
+<span class="fc" id="L39">	}</span>
+	
+	private void ajouterErreur(String label, String message) {
+<span class="fc" id="L42">		Prog.ajouter(Etiq.lEtiq(label));</span>
+<span class="fc" id="L43">		Prog.ajouter(Inst.creation1(Operation.WSTR, Operande.creationOpChaine(message)));</span>
+<span class="fc" id="L44">		Prog.ajouter(Inst.creation0(Operation.HALT));</span>
+<span class="fc" id="L45">	}</span>
+	
+	public static void verifDebordementIndiceTableau(Arbre a, Registre reg) {
+<span class="fc" id="L48">        Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpEntier(a.getDecor().getType().getIndice().getBorneInf()), Operande.opDirect(reg)));</span>
+<span class="fc" id="L49">        Prog.ajouter(Inst.creation1(Operation.BLT, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementIndiceTableau&quot;))));</span>
+<span class="fc" id="L50">        Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpEntier(a.getDecor().getType().getIndice().getBorneSup()), Operande.opDirect(reg)));</span>
+<span class="fc" id="L51">        Prog.ajouter(Inst.creation1(Operation.BGT, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementIndiceTableau&quot;))));</span>
+<span class="fc" id="L52">        errorUsed.put(&quot;debordementIndiceTableau&quot;, true);</span>
+<span class="fc" id="L53">	}</span>
+	
+	public static void verifDebordementIntervalle(Type type, Registre reg) {
+<span class="fc" id="L56">		Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpEntier(type.getBorneInf()), Operande.opDirect(reg)));</span>
+<span class="fc" id="L57">        Prog.ajouter(Inst.creation1(Operation.BLT, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementIntervalle&quot;))));</span>
+<span class="fc" id="L58">        Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpEntier(type.getBorneSup()), Operande.opDirect(reg)));</span>
+<span class="fc" id="L59">        Prog.ajouter(Inst.creation1(Operation.BGT, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementIntervalle&quot;))));</span>
+<span class="fc" id="L60">        errorUsed.put(&quot;debordementIntervalle&quot;, true);</span>
+<span class="fc" id="L61">	}</span>
+	
+	public static void verifDebordementArithmetique() {
+<span class="fc" id="L64">		Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementArithmetique&quot;))));</span>
+<span class="fc" id="L65">		errorUsed.put(&quot;debordementArithmetique&quot;, true);</span>
+<span class="fc" id="L66">	}</span>
+
+	public static void verifDebordementPile(int taille) {
+<span class="fc" id="L69">		Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(taille)));</span>
+<span class="fc" id="L70">		Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementPile&quot;))));</span>
+<span class="fc" id="L71">		errorUsed.put(&quot;debordementPile&quot;, true);</span>
+<span class="fc" id="L72">	}</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

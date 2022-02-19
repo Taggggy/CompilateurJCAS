@@ -1,0 +1,9 @@
+program
+	a : 1..5;
+	b : real;
+	c : real;
+begin
+	a := 2;
+	b := 6.0;
+	c := a + b;
+end.

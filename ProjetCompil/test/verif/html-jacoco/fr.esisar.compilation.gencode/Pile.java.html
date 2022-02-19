@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Pile.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.compilation.gencode</a> &gt; <span class="el_source">Pile.java</span></div><h1>Pile.java</h1><pre class="source lang-java linenums">package fr.esisar.compilation.gencode;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import fr.esisar.compilation.global.src.Arbre;
+import fr.esisar.compilation.global.src.NatureType;
+import fr.esisar.compilation.global.src.Type;
+import fr.esisar.compilation.global.src3.Etiq;
+import fr.esisar.compilation.global.src3.Inst;
+import fr.esisar.compilation.global.src3.Operande;
+import fr.esisar.compilation.global.src3.Operation;
+import fr.esisar.compilation.global.src3.Prog;
+
+<span class="nc" id="L15">public class Pile {</span>
+	
+	private static Map&lt;String, Integer&gt; pile;
+	private static int SP; //pointeur de pile
+	
+	public static void reset() {
+<span class="nc" id="L21">		pile = new HashMap&lt;String, Integer&gt;(); //Variables permanentes du programme</span>
+<span class="nc" id="L22">		SP = 1;</span>
+<span class="nc" id="L23">	}</span>
+	
+	public static boolean containsChaine(String idf) {
+<span class="nc" id="L26">		return pile.containsKey(idf);</span>
+	}
+	
+	public static int getAddress(String idf) {
+<span class="nc" id="L30">		return pile.get(idf);</span>
+	}
+	
+	public static void allocationPermanente(Arbre a) {
+		//TODO optimiser un faisant un seul TSTO, BOV, ADDSP à la fin des déclarations globales ?
+<span class="nc" id="L35">		Prog.ajouterComment(&quot;Début de l'allocation d'une variable permanente dans la pile&quot;);</span>
+<span class="nc" id="L36">		Type type = a.getDecor().getType();</span>
+<span class="nc bnc" id="L37" title="All 2 branches missed.">		if(type.getNature().equals(NatureType.Array)) {</span>
+<span class="nc" id="L38">			pile.put(a.getChaine(), SP);</span>
+<span class="nc" id="L39">			int decalage = 1;</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">			while(type.getNature().equals(NatureType.Array)) {</span>
+<span class="nc" id="L41">				decalage = decalage * ( a.getDecor().getType().getIndice().getBorneSup()- a.getDecor().getType().getIndice().getBorneInf() + 1);</span>
+<span class="nc" id="L42">				type = type.getElement();</span>
+			}
+<span class="nc" id="L44">			Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(decalage)));</span>
+<span class="nc" id="L45">			Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementPile&quot;))));</span>
+<span class="nc" id="L46">			Prog.ajouter(Inst.creation1(Operation.ADDSP, Operande.creationOpEntier(decalage)));</span>
+<span class="nc" id="L47">			SP += decalage;</span>
+<span class="nc" id="L48">		} </span>
+		else //Boolean, Interval, Real 
+		{
+<span class="nc" id="L51">			pile.put(a.getChaine(), SP);</span>
+<span class="nc" id="L52">			Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(1)));</span>
+<span class="nc" id="L53">			Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementPile&quot;))));</span>
+<span class="nc" id="L54">			Prog.ajouter(Inst.creation1(Operation.ADDSP, Operande.creationOpEntier(1)));</span>
+<span class="nc" id="L55">			SP++;</span>
+		}
+<span class="nc" id="L57">		Prog.ajouterComment(&quot;Fin de l'allocation d'une variable permanente dans la pile&quot;);</span>
+<span class="nc" id="L58">	}</span>
+	
+	public static int allocationTemporaire() {
+<span class="nc" id="L61">		Prog.ajouterComment(&quot;Début de l'allocation d'une variable temporaire dans la pile&quot;);</span>
+<span class="nc" id="L62">		Prog.ajouter(Inst.creation1(Operation.TSTO, Operande.creationOpEntier(1)));</span>
+<span class="nc" id="L63">		Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementPile&quot;))));</span>
+<span class="nc" id="L64">		Prog.ajouter(Inst.creation1(Operation.ADDSP, Operande.creationOpEntier(1)));</span>
+<span class="nc" id="L65">		SP++;</span>
+<span class="nc" id="L66">		Prog.ajouterComment(&quot;Fin de l'allocation d'une variable temporaire dans la pile&quot;);</span>
+<span class="nc" id="L67">		return SP-1;</span>
+	}
+	
+	public static void liberationTemporaire() { //On libère uniquement des variables temporaires
+<span class="nc" id="L71">		Prog.ajouterComment(&quot;Libération d'une variable temporaire dans la pile&quot;);</span>
+<span class="nc" id="L72">		SP--;</span>
+<span class="nc" id="L73">		Prog.ajouter(Inst.creation1(Operation.SUBSP, Operande.creationOpEntier(1)));</span>
+<span class="nc" id="L74">	}</span>
+	
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

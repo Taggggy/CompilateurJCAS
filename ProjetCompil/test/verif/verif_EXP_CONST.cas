@@ -1,0 +1,6 @@
+program
+	a : +1 .. max_int;
+	b : -5 .. 3;
+begin
+	null;
+end.

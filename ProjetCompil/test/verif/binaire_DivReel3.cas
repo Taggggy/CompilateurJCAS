@@ -1,0 +1,9 @@
+program
+	a : integer;
+	b : real;
+	c : real;
+begin
+	a := 1;
+	b := 2.0;
+	c := a / b;
+end.

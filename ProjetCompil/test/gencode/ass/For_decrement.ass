@@ -1,0 +1,58 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+   ADDSP #1 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; ------------------------------Affect : 4------------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 4-------------------------
+   LOAD #0, R1 
+   CMP #0, R1 
+   BLT debordementintervalle 
+   CMP #5, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; -------------------------------Pour : 5-------------------------------
+; ------------------------Chargement, ligne : 5-------------------------
+   LOAD #5, R0 
+; ------------------------Chargement, ligne : 5-------------------------
+   LOAD #1, R1 
+   STORE R0, 1(GB) 
+debutfor.1: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 2(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 3(GB) 
+; -----------------------------Ecriture : 6-----------------------------
+   WSTR "i = " 
+; ------------------------Chargement, ligne : 6-------------------------
+   LOAD 1(GB), R1 
+   WINT 
+   LOAD 2(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 3(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----------------------------new_line : 7-----------------------------
+   WNL 
+   SUB #1, R0 
+   STORE R0, 1(GB) 
+   CMP R0, R1 
+   BLE debutfor.1 
+   HALT 
+debordementintervalle: 
+   WSTR "Erreur - Debordement d'intervalle" 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

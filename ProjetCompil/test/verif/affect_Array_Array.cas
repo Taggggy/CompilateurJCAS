@@ -1,0 +1,6 @@
+program
+	a : array [1 .. 5] of integer;
+	b : array [1 .. 5] of integer;
+begin
+	b := a;
+end.

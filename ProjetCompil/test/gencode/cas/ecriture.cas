@@ -1,0 +1,6 @@
+program
+begin
+	write("slt");
+	new_line;
+	write("test", "ok");
+end.

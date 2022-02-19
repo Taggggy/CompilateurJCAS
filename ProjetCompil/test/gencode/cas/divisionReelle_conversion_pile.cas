@@ -1,0 +1,11 @@
+program
+	a : integer;
+	b : integer;
+	c : real;
+begin
+	a := 3;
+	b := 4;
+	c := a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(a+(b/2))))))))))))))))));
+	write("c = ", c);
+	new_line;
+end.

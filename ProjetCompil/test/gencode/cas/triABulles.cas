@@ -1,0 +1,27 @@
+-- Fonction tri a bulles
+program 
+   i : 1 .. 10;
+   j : 1 .. 10;
+   a : array [1..10] of integer;
+   tmp : integer;
+begin
+   for i:= 1 to 10 do
+      write("a[", i, "] = ? ");
+      read(a[i]);
+   end; 
+   new_line;
+   for i := 10 downto 1 do
+      for j := 1 to i-1 do
+         if (a[j+1] < a[j]) then
+            tmp := a[j+1];
+            a[j+1] := a[j];
+            a[j] := tmp;
+         end;
+      end;
+   end;
+
+   for i:= 1 to 10 do
+      write("a[", i, "] = ", a[i]);
+      new_line;
+   end;
+end.

@@ -1,0 +1,7 @@
+program
+	a : integer;
+begin
+	a := max_int;
+	write("a = ", a);
+	new_line;
+end.

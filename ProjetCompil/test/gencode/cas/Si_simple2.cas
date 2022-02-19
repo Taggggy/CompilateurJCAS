@@ -1,0 +1,9 @@
+program
+	a : boolean;
+begin
+	a := 3 < 2;
+	if a then
+		write("3 < 2 ! => true");
+	end;
+	new_line;
+end.

@@ -1,0 +1,5 @@
+program
+    v : array [1 .. 2] of integer ;
+begin
+    v[1][2] := 1 ;  -- place de type 'array' attendue pour une indexation
+end.

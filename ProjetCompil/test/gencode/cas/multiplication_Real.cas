@@ -1,0 +1,10 @@
+program
+	a : real;
+begin
+	a := 9.0;
+	write("a = ", a);
+	new_line;
+	a := a * 5.0;
+	write("a = ", a);
+	new_line;
+end.

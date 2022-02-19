@@ -1,0 +1,30 @@
+program
+	a : integer;
+	b : integer;
+	c : integer;
+	d : integer;
+	e : integer;
+	f : integer;
+	g : integer;
+	h : integer;
+	i : integer;
+	j : integer;
+	k : integer;
+	l : integer;
+	m : integer;
+	n : integer;
+	o : integer;
+	p : integer;
+	q : integer;
+	r : integer;
+	s : integer;
+	t : integer;
+	u : integer;
+	v : integer;
+	w : integer;
+	x : integer;
+	y : integer;
+	z : integer;
+begin
+	new_line;
+end.

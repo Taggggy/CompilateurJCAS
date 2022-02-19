@@ -1,0 +1,74 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #10 
+   BOV debordementpile 
+   ADDSP #10 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; ------------------------------Affect : 5------------------------------
+   LOAD #6, R0 
+; ------------------------Chargement, ligne : 5-------------------------
+   LOAD #1, R14 
+   CMP #1, R14 
+   BLT debordementindicetableau 
+   CMP #5, R14 
+   BGT debordementindicetableau 
+   SUB #1, R14 
+   MUL #1, R14 
+   ADD R14, R0 
+; ------------------------Chargement, ligne : 5-------------------------
+   LOAD #42, R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; ------------------------------Affect : 6------------------------------
+   LOAD #1, R0 
+   LOAD #6, R1 
+   LOAD #4, R2 
+   ADD R1, R2 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R2, 11(GB) 
+debutaffectationcomposee.1: 
+   CMP 11(GB), R1 
+   BGT finaffectationcomposee.2 
+   LOAD 0(GB, R1), R2 
+   CMP #1, R2 
+   BLT debordementintervalle 
+   CMP #5, R2 
+   BGT debordementintervalle 
+   STORE R2, 0(GB, R0) 
+   ADD #1, R0 
+   ADD #1, R1 
+   BRA debutaffectationcomposee.1 
+finaffectationcomposee.2: 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----------------------------Ecriture : 7-----------------------------
+   LOAD #1, R1 
+; ------------------------Chargement, ligne : 7-------------------------
+   LOAD #1, R14 
+   CMP #1, R14 
+   BLT debordementindicetableau 
+   CMP #5, R14 
+   BGT debordementindicetableau 
+   SUB #1, R14 
+   MUL #1, R14 
+   ADD R14, R1 
+   LOAD 0(GB, R1), R1 
+   WINT 
+   HALT 
+debordementintervalle: 
+   WSTR "Erreur - Debordement d'intervalle" 
+   HALT 
+debordementindicetableau: 
+   WSTR "Erreur - Debordement d'indice de tableau" 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

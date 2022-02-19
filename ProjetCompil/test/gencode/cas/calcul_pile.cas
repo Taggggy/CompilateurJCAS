@@ -1,0 +1,14 @@
+program
+	a : 7 .. 1200000;
+	b : 1 .. 100;
+	c : array [1 .. 5] of integer;
+begin
+	a := 8;
+	b := 5;
+	c[1] := 3;
+	write("a = ", a);
+	new_line;
+	a := a + (a + (a + (a + (a + (a + (a + (a + (a+ (a + (a + (a + (a + (a + (a + (a + (a + (a + (a + (a + (a + (a + (c[1] + b))))))))))))))))))))));
+	write("a = ", a);
+	new_line;
+end.

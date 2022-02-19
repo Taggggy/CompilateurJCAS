@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ErreurContext.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.compilation.verif</a> &gt; <span class="el_source">ErreurContext.java</span></div><h1>ErreurContext.java</h1><pre class="source lang-java linenums">// -------------------------------------------------------------------------
+// A COMPLETER, avec les différents types d'erreur et les messages d'erreurs 
+// correspondants
+// -------------------------------------------------------------------------
+
+package fr.esisar.compilation.verif;
+
+/**
+ * Type énuméré pour les erreurs contextuelles. Ce type énuméré définit toutes
+ * les erreurs contextuelles possibles et permet l'affichage des messages
+ * d'erreurs pour la passe 2.
+ */
+
+<span class="nc" id="L14">public enum ErreurContext {</span>
+	/**
+	 * Le type utilisé par n'est pas le type attendu
+	 */
+<span class="nc" id="L18">	ErreurType, </span>
+	
+	/**
+	 * L'identificateur utilisé n'est pas dans la table des symboles
+	 */
+<span class="nc" id="L23">	ErreurIDManquant, </span>
+	
+	/**
+	 * L'identificateur utilisé pour une déclaration existe déjà dans la table des symboles
+	 */
+<span class="nc" id="L28">	ErreurIDExistant, </span>
+	
+	/**
+	 * L'identificateur utilisé est de la mauvaise nature 
+	 */
+<span class="nc" id="L33">	ErreurNature;</span>
+
+   /**
+	* 
+	* @param s Chaine de caractères permettant de préciser quel élément comporte une erreur
+    * @param numLigne Numéro de la ligne où est localisée l'erreur
+	* @throws ErreurVerif
+    */
+   public void leverErreurContext(String s, int numLigne) throws ErreurVerif {
+<span class="nc" id="L42">	  System.err.println(&quot;=====================================================================&quot;);</span>
+<span class="nc" id="L43">      System.err.println(&quot;/!\\ Erreur contextuelle : &quot;);</span>
+<span class="nc bnc" id="L44" title="All 5 branches missed.">      switch (this) {</span>
+      	case ErreurType:
+<span class="nc" id="L46">      		System.err.print(&quot;Mauvais type &quot; + s);</span>
+<span class="nc" id="L47">      		break;</span>
+      	case ErreurIDManquant:
+<span class="nc" id="L49">      		System.err.print(&quot;Identificateur inconnu &quot; + s);</span>
+<span class="nc" id="L50">      		break;</span>
+      	case ErreurIDExistant:
+<span class="nc" id="L52">      		System.err.print(&quot;Identificateur déjà déclaré &quot; + s); </span>
+<span class="nc" id="L53">      		break;</span>
+      	case ErreurNature:
+<span class="nc" id="L55">      		System.err.print(&quot;Identificateur de la mauvaise nature &quot; + s);</span>
+<span class="nc" id="L56">      		break;</span>
+      	default:
+<span class="nc" id="L58">            System.err.print(&quot;Erreur non repertoriée&quot;);</span>
+      }
+<span class="nc" id="L60">      System.err.println(&quot; ... ligne &quot; + numLigne);</span>
+<span class="nc" id="L61">      System.err.println(&quot;=====================================================================&quot;);</span>
+<span class="nc" id="L62">      throw new ErreurVerif();</span>
+   }
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

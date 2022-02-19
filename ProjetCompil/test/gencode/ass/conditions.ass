@@ -1,0 +1,216 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #0 
+   BOV debordementpile 
+   ADDSP #0 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; --------------------------------Si : 3--------------------------------
+; ------------------------Chargement, ligne : 3-------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 3-------------------------
+   LOAD #2, R14 
+   CMP R14, R0 
+   SLT R0 
+   CMP #1, R0 
+   BNE sinon.2 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; -----------------------------Ecriture : 4-----------------------------
+   WSTR "1 < 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   BRA finsi.1 
+sinon.2: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; -----------------------------Ecriture : 6-----------------------------
+   WSTR "1 >= 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.1: 
+; -----------------------------new_line : 8-----------------------------
+   WNL 
+; --------------------------------Si : 9--------------------------------
+; ------------------------Chargement, ligne : 9-------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 9-------------------------
+   LOAD #2, R14 
+   CMP R14, R0 
+   SLE R0 
+   CMP #1, R0 
+   BNE sinon.4 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 10-----------------------------
+   WSTR "1 <= 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   BRA finsi.3 
+sinon.4: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 12-----------------------------
+   WSTR "1 > 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.3: 
+; ----------------------------new_line : 14-----------------------------
+   WNL 
+; -------------------------------Si : 15--------------------------------
+; ------------------------Chargement, ligne : 15------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 15------------------------
+   LOAD #2, R14 
+   CMP R14, R0 
+   SGT R0 
+   CMP #1, R0 
+   BNE sinon.6 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 16-----------------------------
+   WSTR "1 > 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   BRA finsi.5 
+sinon.6: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 18-----------------------------
+   WSTR "1 <= 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.5: 
+; ----------------------------new_line : 20-----------------------------
+   WNL 
+; -------------------------------Si : 21--------------------------------
+; ------------------------Chargement, ligne : 21------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 21------------------------
+   LOAD #2, R14 
+   CMP R14, R0 
+   SGE R0 
+   CMP #1, R0 
+   BNE sinon.8 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 22-----------------------------
+   WSTR "1 >= 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   BRA finsi.7 
+sinon.8: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 24-----------------------------
+   WSTR "1 < 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.7: 
+; ----------------------------new_line : 26-----------------------------
+   WNL 
+; -------------------------------Si : 27--------------------------------
+; ------------------------Chargement, ligne : 27------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 27------------------------
+   LOAD #2, R14 
+   CMP R14, R0 
+   SNE R0 
+   CMP #1, R0 
+   BNE sinon.10 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 28-----------------------------
+   WSTR "1 != 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   BRA finsi.9 
+sinon.10: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 30-----------------------------
+   WSTR "1 = 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.9: 
+; ----------------------------new_line : 32-----------------------------
+   WNL 
+; -------------------------------Si : 33--------------------------------
+; ------------------------Chargement, ligne : 33------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 33------------------------
+   LOAD #2, R14 
+   CMP R14, R0 
+   SEQ R0 
+   CMP #1, R0 
+   BNE sinon.12 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 34-----------------------------
+   WSTR "1 = 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   BRA finsi.11 
+sinon.12: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 1(GB) 
+; ----------------------------Ecriture : 36-----------------------------
+   WSTR "1 != 2" 
+   LOAD 1(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.11: 
+; ----------------------------new_line : 38-----------------------------
+   WNL 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

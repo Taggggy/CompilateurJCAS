@@ -1,0 +1,8 @@
+program
+	T : array[1 .. 5] of integer;
+	i : boolean;
+	b : integer;
+begin
+	i := false;
+	b := T[i];
+end.

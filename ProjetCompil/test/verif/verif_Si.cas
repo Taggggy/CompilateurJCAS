@@ -1,0 +1,10 @@
+program
+	a : integer;
+begin
+	a := 6;
+	if a = 5 then
+		null;
+	else
+		null;
+	end;
+end.

@@ -1,0 +1,8 @@
+program
+	a : integer;
+begin
+	a := 2;
+	while (a+2) do
+		null;
+	end;
+end.

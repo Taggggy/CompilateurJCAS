@@ -1,0 +1,9 @@
+program
+begin
+	if false then
+		write("true");
+	else
+		write("false");
+	end;
+	new_line;
+end.

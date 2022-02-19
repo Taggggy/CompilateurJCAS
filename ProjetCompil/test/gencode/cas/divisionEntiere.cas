@@ -1,0 +1,10 @@
+program
+	a : integer;
+begin
+	a := 9 div 3;
+	write("9 div 3 = ", a);
+	new_line;
+	a := 9 div 2;
+	write("9 div 2 = ", a);
+	new_line;
+end.

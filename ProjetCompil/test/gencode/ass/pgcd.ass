@@ -1,0 +1,128 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #5 
+   BOV debordementpile 
+   ADDSP #5 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; -----------------------------Lecture : 8------------------------------
+   LOAD #1, R0 
+; -------------------------------Read int-------------------------------
+   RINT 
+   BOV debordementarithmetique 
+   STORE R1, 0(GB, R0) 
+; -----------------------------Lecture : 9------------------------------
+   LOAD #2, R0 
+; -------------------------------Read int-------------------------------
+   RINT 
+   BOV debordementarithmetique 
+   STORE R1, 0(GB, R0) 
+; -----------------------------Affect : 10------------------------------
+   LOAD #4, R0 
+; ------------------------Chargement, ligne : 10------------------------
+   LOAD 1(GB), R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; -----------------------------Affect : 11------------------------------
+   LOAD #5, R0 
+; ------------------------Chargement, ligne : 11------------------------
+   LOAD 2(GB), R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; -----------------------------TantQue : 12-----------------------------
+   BRA conditionwhile.1 
+debutwhile.2: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 6(GB) 
+; -----------------------------Affect : 13------------------------------
+   LOAD #3, R0 
+; ------------------------Chargement, ligne : 13------------------------
+   LOAD 2(GB), R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+   LOAD 6(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 6(GB) 
+; -----------------------------Affect : 14------------------------------
+   LOAD #2, R0 
+; ------------------------Chargement, ligne : 14------------------------
+   LOAD 1(GB), R1 
+; ------------------------Chargement, ligne : 14------------------------
+   LOAD 2(GB), R14 
+   MOD R14, R1 
+   BOV debordementarithmetique 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+   LOAD 6(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 6(GB) 
+; -----------------------------Affect : 15------------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 15------------------------
+   LOAD 3(GB), R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+   LOAD 6(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+conditionwhile.1: 
+; ------------------------Chargement, ligne : 12------------------------
+   LOAD 2(GB), R0 
+; ------------------------Chargement, ligne : 12------------------------
+   LOAD #0, R14 
+   CMP R14, R0 
+   SNE R0 
+   CMP #1, R0 
+   BEQ debutwhile.2 
+; ----------------------------Ecriture : 17-----------------------------
+   WSTR "Le PGCD de " 
+; ------------------------Chargement, ligne : 17------------------------
+   LOAD 4(GB), R1 
+   WINT 
+   WSTR " et " 
+; ------------------------Chargement, ligne : 17------------------------
+   LOAD 5(GB), R1 
+   WINT 
+   WSTR " vaut " 
+; ------------------------Chargement, ligne : 17------------------------
+   LOAD 1(GB), R1 
+   WINT 
+   HALT 
+debordementarithmetique: 
+   WSTR "Erreur - Debordement arithmetique" 
+   HALT 
+debordementintervalle: 
+   WSTR "Erreur - Debordement d'intervalle" 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

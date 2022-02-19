@@ -1,0 +1,9 @@
+program
+	a : integer;
+	b : 1..5;
+	c : integer;
+begin
+	a := 1;
+	b := 2;
+	c := a div b;
+end.

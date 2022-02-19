@@ -1,0 +1,9 @@
+program
+	a : boolean;
+	b : boolean;
+	c : boolean;
+begin
+	a := true;
+	b := false;
+	c := a = b;
+end.

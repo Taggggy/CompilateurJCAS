@@ -1,0 +1,9 @@
+program
+	a : real;
+	b : real;
+	c : boolean;
+begin
+	a := 3.0;
+	b := 2.0;
+	c := a > b;
+end.

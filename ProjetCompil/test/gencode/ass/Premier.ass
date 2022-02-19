@@ -1,0 +1,321 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #8197 
+   BOV debordementpile 
+   ADDSP #8197 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; ------------------------------Affect : 8------------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 8-------------------------
+   LOAD #8190, R1 
+   CMP #8190, R1 
+   BLT debordementintervalle 
+   CMP #8190, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; ------------------------------Affect : 9------------------------------
+   LOAD #4, R0 
+; ------------------------Chargement, ligne : 9-------------------------
+   LOAD #0, R1 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+; ------------------------------Pour : 11-------------------------------
+; ------------------------Chargement, ligne : 11------------------------
+   LOAD #0, R0 
+; ------------------------Chargement, ligne : 11------------------------
+   LOAD 1(GB), R1 
+   STORE R0, 8196(GB) 
+debutfor.1: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8198(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8199(GB) 
+; -----------------------------Affect : 12------------------------------
+   LOAD #5, R0 
+; ------------------------Chargement, ligne : 12------------------------
+   LOAD 8196(GB), R14 
+   CMP #0, R14 
+   BLT debordementindicetableau 
+   CMP #8190, R14 
+   BGT debordementindicetableau 
+   SUB #0, R14 
+   MUL #1, R14 
+   ADD R14, R0 
+; ------------------------Chargement, ligne : 12------------------------
+   LOAD #1, R1 
+   STORE R1, 0(GB, R0) 
+   LOAD 8198(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8199(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   ADD #1, R0 
+   STORE R0, 8196(GB) 
+   CMP R0, R1 
+   BGE debutfor.1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8198(GB) 
+; ------------------------------Pour : 15-------------------------------
+; ------------------------Chargement, ligne : 15------------------------
+   LOAD #0, R0 
+; ------------------------Chargement, ligne : 15------------------------
+   LOAD 1(GB), R1 
+   STORE R0, 8196(GB) 
+debutfor.2: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8199(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8200(GB) 
+; -------------------------------Si : 16--------------------------------
+   LOAD #5, R0 
+; ------------------------Chargement, ligne : 16------------------------
+   LOAD 8196(GB), R14 
+   CMP #0, R14 
+   BLT debordementindicetableau 
+   CMP #8190, R14 
+   BGT debordementindicetableau 
+   SUB #0, R14 
+   MUL #1, R14 
+   ADD R14, R0 
+   LOAD 0(GB, R0), R0 
+   CMP #1, R0 
+   BNE finsi.3 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8201(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8202(GB) 
+; -----------------------------Affect : 17------------------------------
+   LOAD #3, R0 
+; ------------------------Chargement, ligne : 17------------------------
+   LOAD 8196(GB), R1 
+; ------------------------Chargement, ligne : 17------------------------
+   LOAD 8196(GB), R14 
+   ADD R14, R1 
+   BOV debordementarithmetique 
+; ------------------------Chargement, ligne : 17------------------------
+   LOAD #3, R14 
+   ADD R14, R1 
+   BOV debordementarithmetique 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+   LOAD 8201(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8202(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8201(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8202(GB) 
+; -----------------------------Affect : 18------------------------------
+   LOAD #2, R0 
+; ------------------------Chargement, ligne : 18------------------------
+   LOAD 8196(GB), R1 
+; ------------------------Chargement, ligne : 18------------------------
+   LOAD 3(GB), R14 
+   ADD R14, R1 
+   BOV debordementarithmetique 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+   LOAD 8201(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8202(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8201(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8202(GB) 
+; -----------------------------TantQue : 19-----------------------------
+   BRA conditionwhile.4 
+debutwhile.5: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8203(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8204(GB) 
+; -----------------------------Affect : 20------------------------------
+   LOAD #5, R0 
+; ------------------------Chargement, ligne : 20------------------------
+   LOAD 2(GB), R14 
+   CMP #0, R14 
+   BLT debordementindicetableau 
+   CMP #8190, R14 
+   BGT debordementindicetableau 
+   SUB #0, R14 
+   MUL #1, R14 
+   ADD R14, R0 
+; ------------------------Chargement, ligne : 20------------------------
+   LOAD #0, R1 
+   STORE R1, 0(GB, R0) 
+   LOAD 8203(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8204(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8203(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8204(GB) 
+; -----------------------------Affect : 21------------------------------
+   LOAD #2, R0 
+; ------------------------Chargement, ligne : 21------------------------
+   LOAD 2(GB), R1 
+; ------------------------Chargement, ligne : 21------------------------
+   LOAD 3(GB), R14 
+   ADD R14, R1 
+   BOV debordementarithmetique 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+   LOAD 8203(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8204(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+conditionwhile.4: 
+; ------------------------Chargement, ligne : 19------------------------
+   LOAD 2(GB), R0 
+; ------------------------Chargement, ligne : 19------------------------
+   LOAD 1(GB), R14 
+   CMP R14, R0 
+   SLE R0 
+   CMP #1, R0 
+   BEQ debutwhile.5 
+   LOAD 8201(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8202(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 8201(GB) 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8202(GB) 
+; -----------------------------Affect : 23------------------------------
+   LOAD #4, R0 
+; ------------------------Chargement, ligne : 23------------------------
+   LOAD 4(GB), R1 
+; ------------------------Chargement, ligne : 23------------------------
+   LOAD #1, R14 
+   ADD R14, R1 
+   BOV debordementarithmetique 
+   CMP #-2147483647, R1 
+   BLT debordementintervalle 
+   CMP #2147483647, R1 
+   BGT debordementintervalle 
+   STORE R1, 0(GB, R0) 
+   LOAD 8201(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8202(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.3: 
+   LOAD 8199(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   LOAD 8200(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   ADD #1, R0 
+   STORE R0, 8196(GB) 
+   CMP R0, R1 
+   BGE debutfor.2 
+   LOAD 8198(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R1, 8198(GB) 
+; ----------------------------Ecriture : 27-----------------------------
+; ------------------------Chargement, ligne : 27------------------------
+   LOAD 4(GB), R1 
+   WINT 
+   WSTR " est un nombre premier" 
+   LOAD 8198(GB), R1 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   HALT 
+debordementarithmetique: 
+   WSTR "Erreur - Debordement arithmetique" 
+   HALT 
+debordementintervalle: 
+   WSTR "Erreur - Debordement d'intervalle" 
+   HALT 
+debordementindicetableau: 
+   WSTR "Erreur - Debordement d'indice de tableau" 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

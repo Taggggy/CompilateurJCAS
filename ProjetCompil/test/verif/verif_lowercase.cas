@@ -1,0 +1,5 @@
+program
+    i : integer;
+begin
+    I := 1;
+end.

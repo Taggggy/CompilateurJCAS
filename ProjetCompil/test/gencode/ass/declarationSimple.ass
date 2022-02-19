@@ -1,0 +1,13 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #3 
+   BOV debordementpile 
+   ADDSP #3 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; -------------------------------Nop : 6--------------------------------
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

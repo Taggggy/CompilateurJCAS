@@ -1,0 +1,5 @@
+program
+    v : array[-2 .. 3] of integer ;
+begin
+    v[1.2] := 1 ;
+end.

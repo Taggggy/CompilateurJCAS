@@ -1,0 +1,10 @@
+program
+	a : integer;
+	b : real;
+	c : boolean;
+begin
+	a := 5;
+	b := 1.2e-3;
+	c := false;
+	write("Test d'erreur", a, b, c);
+end.

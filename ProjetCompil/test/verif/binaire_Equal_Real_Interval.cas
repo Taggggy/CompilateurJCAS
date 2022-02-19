@@ -1,0 +1,9 @@
+program
+	a : 1..5;
+	b : real;
+	c : boolean;
+begin
+	a := 2;
+	b := 5.0;
+	c := b = a;
+end.

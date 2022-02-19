@@ -1,0 +1,55 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #4 
+   BOV debordementpile 
+   ADDSP #4 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; -----------------------------Ecriture : 7-----------------------------
+   WSTR "integer a = ?" 
+; -----------------------------new_line : 8-----------------------------
+   WNL 
+; -----------------------------Lecture : 9------------------------------
+   LOAD #1, R0 
+; -------------------------------Read int-------------------------------
+   RINT 
+   BOV debordementarithmetique 
+   STORE R1, 0(GB, R0) 
+; ----------------------------Ecriture : 10-----------------------------
+   WSTR "real b = ?" 
+; ----------------------------new_line : 11-----------------------------
+   WNL 
+; -----------------------------Lecture : 12-----------------------------
+   LOAD #2, R0 
+; ------------------------------Read real-------------------------------
+   RFLOAT 
+   BOV debordementarithmetique 
+   STORE R1, 0(GB, R0) 
+; ----------------------------Ecriture : 13-----------------------------
+   WSTR "integer c = ?" 
+; ----------------------------new_line : 14-----------------------------
+   WNL 
+; -----------------------------Lecture : 15-----------------------------
+   LOAD #3, R0 
+; -------------------------------Read int-------------------------------
+   RINT 
+   BOV debordementarithmetique 
+   STORE R1, 0(GB, R0) 
+; ----------------------------Ecriture : 16-----------------------------
+   WSTR "real d = ?" 
+; ----------------------------new_line : 17-----------------------------
+   WNL 
+; -----------------------------Lecture : 18-----------------------------
+   LOAD #4, R0 
+; ------------------------------Read real-------------------------------
+   RFLOAT 
+   BOV debordementarithmetique 
+   STORE R1, 0(GB, R0) 
+   HALT 
+debordementarithmetique: 
+   WSTR "Erreur - Debordement arithmetique" 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

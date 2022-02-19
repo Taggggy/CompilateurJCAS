@@ -1,0 +1,6 @@
+program
+	a : integer;
+begin
+	a := 6;
+	a := a + 2;
+end.

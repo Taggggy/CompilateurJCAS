@@ -1,0 +1,9 @@
+program
+	a : boolean;
+	b : 1..6;
+	c : integer;
+begin
+	a := true;
+	b := 6;
+	c := a + b;
+end.

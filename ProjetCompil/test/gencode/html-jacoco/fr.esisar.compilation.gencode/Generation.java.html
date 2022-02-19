@@ -1,0 +1,517 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Generation.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">JaCoCo Coverage Report</a> &gt; <a href="index.source.html" class="el_package">fr.esisar.compilation.gencode</a> &gt; <span class="el_source">Generation.java</span></div><h1>Generation.java</h1><pre class="source lang-java linenums">package fr.esisar.compilation.gencode;
+
+import fr.esisar.compilation.global.src.*;
+import fr.esisar.compilation.global.src3.*;
+
+/**
+ * Génération de code pour un programme JCas à partir d'un arbre décoré.
+ */
+
+<span class="fc" id="L10">class Generation {</span>
+   
+   /**
+    * Méthode principale de génération de code.
+    * Génère du code pour l'arbre décoré a.
+    */
+   static Prog coder(Arbre a) {
+<span class="fc" id="L17">      Prog.ajouterGrosComment(&quot;Programme généré par JCasc&quot;);</span>
+
+      // -----------
+      // A COMPLETER
+      // -----------
+<span class="fc" id="L22">      Generation generator = new Generation();</span>
+<span class="fc" id="L23">      Pile.reset();</span>
+<span class="fc" id="L24">      Registres.reset();</span>
+<span class="fc" id="L25">      Erreur.reset();</span>
+<span class="fc" id="L26">      generator.coder_LISTE_DECL(a.getFils1());</span>
+<span class="fc" id="L27">      Pile.allocationPermanente();</span>
+<span class="fc" id="L28">      generator.coder_LISTE_INST(a.getFils2());</span>
+      
+      // Fin du programme
+      // L'instruction &quot;HALT&quot;
+<span class="fc" id="L32">      Inst inst = Inst.creation0(Operation.HALT);</span>
+      // On ajoute l'instruction à la fin du programme
+<span class="fc" id="L34">      Prog.ajouter(inst);</span>
+<span class="fc" id="L35">      Erreur erreur = new Erreur(); erreur.ecrireErreurs();</span>
+      // On retourne le programme assembleur généré
+<span class="fc" id="L37">      return Prog.instance(); </span>
+   }
+   
+   private void coder_LISTE_DECL(Arbre a) {
+<span class="pc bpc" id="L41" title="1 of 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case ListeDecl:
+<span class="fc" id="L43">		   coder_LISTE_DECL(a.getFils1());</span>
+<span class="fc" id="L44">		   coder_DECL(a.getFils2());</span>
+<span class="fc" id="L45">		   break;</span>
+	   case Vide:
+<span class="fc" id="L47">		   break;</span>
+	   default:
+		   break;
+	   }
+<span class="fc" id="L51">   }</span>
+   
+   private void coder_DECL(Arbre a) {
+<span class="fc" id="L54">	  coder_LISTE_IDENT(a.getFils1());</span>
+<span class="fc" id="L55">   }</span>
+   
+   private void coder_LISTE_IDENT(Arbre a) {
+<span class="pc bpc" id="L58" title="1 of 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case ListeIdent:
+<span class="fc" id="L60">		  coder_LISTE_IDENT(a.getFils1());</span>
+<span class="fc" id="L61">		  Pile.reservationPermanente(a.getFils2());</span>
+<span class="fc" id="L62">		  break;</span>
+	   case Vide:
+<span class="fc" id="L64">		  break;</span>
+	   default:
+		  break;
+	   }
+<span class="fc" id="L68">   }</span>
+   
+
+   private void coder_LISTE_INST(Arbre a) {
+<span class="pc bpc" id="L72" title="1 of 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case ListeInst:
+<span class="fc" id="L74">		   coder_LISTE_INST(a.getFils1());</span>
+<span class="fc" id="L75">		   coder_INST(a.getFils2());</span>
+<span class="fc" id="L76">		   break;</span>
+	   case Vide:
+<span class="fc" id="L78">		   break;</span>
+	   default:
+		   break;
+	   }
+<span class="fc" id="L82">   }</span>
+   
+   private void coder_INST(Arbre a) {
+<span class="fc bfc" id="L85" title="All 2 branches covered.">	   if(a.getNoeud().equals(Noeud.Nop))</span>
+<span class="fc" id="L86">		   Prog.ajouterComment(&quot;Nop : &quot; + a.getNumLigne());</span>
+<span class="fc bfc" id="L87" title="All 2 branches covered.">	   else if(a.getNoeud().equals(Noeud.Ligne)) {</span>
+<span class="fc" id="L88">		   Prog.ajouterComment(&quot;new_line : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L89">		   Prog.ajouter(Inst.creation0(Operation.WNL));</span>
+	   } else {
+		   
+		 //Sauvegarde registres réservés
+<span class="fc" id="L93">		   int sauvegarderR0 = 0;</span>
+<span class="fc" id="L94">		   int sauvegarderR1 = 0;</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">		   if(!Registres.isFreeReg(Registre.R0)) {</span>
+<span class="fc" id="L96">			   sauvegarderR0 = Pile.allocationTemporaire();</span>
+<span class="fc" id="L97">			   Prog.ajouter(Inst.creation2(Operation.STORE,Operande.opDirect(Registre.R0), Operande.creationOpIndirect(sauvegarderR0, Registre.GB)));</span>
+		   }
+<span class="fc bfc" id="L99" title="All 2 branches covered.">		   if(!Registres.isFreeReg(Registre.R1)) {</span>
+<span class="fc" id="L100">			   sauvegarderR1 = Pile.allocationTemporaire();</span>
+<span class="fc" id="L101">			   Prog.ajouter(Inst.creation2(Operation.STORE,Operande.opDirect(Registre.R1), Operande.creationOpIndirect(sauvegarderR1, Registre.GB)));</span>
+		   }
+
+<span class="pc bpc" id="L104" title="1 of 7 branches missed.">		   switch(a.getNoeud()) {</span>
+		   case Affect:
+<span class="fc" id="L106">			   Prog.ajouterComment(&quot;Affect : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L107">			   coder_Affect(a);</span>
+<span class="fc" id="L108">			   break;</span>
+		   case Pour:
+<span class="fc" id="L110">			   Prog.ajouterComment(&quot;Pour : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L111">			   coder_Pour(a);</span>
+<span class="fc" id="L112">			   break;</span>
+		   case TantQue:
+<span class="fc" id="L114">			   Prog.ajouterComment(&quot;TantQue : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L115">			   coder_TantQue(a);</span>
+<span class="fc" id="L116">			   break;</span>
+		   case Si:
+<span class="fc" id="L118">			   Prog.ajouterComment(&quot;Si : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L119">			   coder_Si(a);</span>
+<span class="fc" id="L120">			   break;</span>
+		   case Lecture:
+<span class="fc" id="L122">			   Prog.ajouterComment(&quot;Lecture : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L123">			   coder_Lecture(a.getFils1());</span>
+<span class="fc" id="L124">			   break;</span>
+		   case Ecriture:
+<span class="fc" id="L126">			   Prog.ajouterComment(&quot;Ecriture : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L127">			   boolean r1 = Registres.isFreeReg(Registre.R1);</span>
+<span class="fc" id="L128">			   Registres.reserver(Registre.R1);</span>
+<span class="fc" id="L129">			   coder_Ecriture(a.getFils1());</span>
+<span class="fc bfc" id="L130" title="All 2 branches covered.">			   if(r1)	Registres.liberer(Registre.R1);</span>
+			   break;
+		   default:
+			   break;
+		   }
+		   
+<span class="fc bfc" id="L136" title="All 2 branches covered.">		   if(sauvegarderR0 != 0) {</span>
+<span class="fc" id="L137">			   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpIndirect(sauvegarderR0, Registre.GB),Operande.opDirect(Registre.R0)));</span>
+<span class="fc" id="L138">			   Pile.liberationTemporaire();</span>
+		   }
+<span class="fc bfc" id="L140" title="All 2 branches covered.">		   if(sauvegarderR1 != 0) {</span>
+<span class="fc" id="L141">			   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpIndirect(sauvegarderR1, Registre.GB),Operande.opDirect(Registre.R1)));</span>
+<span class="fc" id="L142">			   Pile.liberationTemporaire();</span>
+		   }
+	   }	   
+<span class="fc" id="L145">   }</span>
+   
+   private void coder_Pour(Arbre a) {
+<span class="fc" id="L148">	   boolean r0 = Registres.isFreeReg(Registre.R0);</span>
+<span class="fc" id="L149">	   Registres.reserver(Registre.R0);</span>
+<span class="fc" id="L150">	   boolean r1 = Registres.isFreeReg(Registre.R0);</span>
+<span class="fc" id="L151">	   Registres.reserver(Registre.R1);</span>
+<span class="fc" id="L152">	   Etiq debutFor = Etiq.nouvelle(&quot;debutFor&quot;);</span>
+
+<span class="fc" id="L154">	   coder_EXP(a.getFils1().getFils2(), Registre.R0);</span>
+<span class="fc" id="L155">	   coder_EXP(a.getFils1().getFils3(), Registre.R1);</span>
+	   
+<span class="fc" id="L157">	   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R0), Operande.creationOpIndirect(Pile.getAddress(a.getFils1().getFils1().getChaine().toLowerCase()), Registre.GB)));</span>
+<span class="fc" id="L158">	   Prog.ajouter(debutFor);	   </span>
+<span class="fc" id="L159">	   coder_LISTE_INST(a.getFils2());</span>
+	   
+<span class="pc bpc" id="L161" title="1 of 3 branches missed.">	   switch(a.getFils1().getNoeud()) {</span>
+	   	case Increment:
+<span class="fc" id="L163">			Prog.ajouter(Inst.creation2(Operation.ADD, Operande.creationOpEntier(1), Operande.opDirect(Registre.R0)));</span>
+<span class="fc" id="L164">			Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R0), Operande.creationOpIndirect(Pile.getAddress(a.getFils1().getFils1().getChaine().toLowerCase()), Registre.GB)));	</span>
+<span class="fc" id="L165">			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.R0, Operande.R1));</span>
+<span class="fc" id="L166">			Prog.ajouter(Inst.creation1(Operation.BGE,Operande.creationOpEtiq(debutFor)));</span>
+<span class="fc" id="L167">			break;</span>
+	   	case Decrement:
+<span class="fc" id="L169">			Prog.ajouter(Inst.creation2(Operation.SUB, Operande.creationOpEntier(1), Operande.opDirect(Registre.R0)));</span>
+<span class="fc" id="L170">			Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R0), Operande.creationOpIndirect(Pile.getAddress(a.getFils1().getFils1().getChaine().toLowerCase()), Registre.GB)));	</span>
+<span class="fc" id="L171">			Prog.ajouter(Inst.creation2(Operation.CMP, Operande.R0, Operande.R1));</span>
+<span class="fc" id="L172">			Prog.ajouter(Inst.creation1(Operation.BLE,Operande.creationOpEtiq(debutFor)));</span>
+<span class="fc" id="L173">			break;</span>
+	   	default:
+	   		break;
+	   }
+<span class="fc bfc" id="L177" title="All 2 branches covered.">	   if(r0)	Registres.liberer(Registre.R0);</span>
+<span class="pc bpc" id="L178" title="1 of 2 branches missed.">	   if(r1)	Registres.liberer(Registre.R1);</span>
+<span class="fc" id="L179">   }</span>
+   
+   private void coder_Affect(Arbre a) {
+<span class="fc" id="L182">	   boolean r0 = Registres.isFreeReg(Registre.R0);</span>
+<span class="fc" id="L183">	   Registres.reserver(Registre.R0);</span>
+<span class="fc" id="L184">	   boolean r1 = Registres.isFreeReg(Registre.R1);</span>
+<span class="fc" id="L185">	   Registres.reserver(Registre.R1);</span>
+	   
+<span class="fc" id="L187">	   Type type = coder_Place(a.getFils1(), Registre.R0);</span>
+<span class="fc bfc" id="L188" title="All 2 branches covered.">	   if(type.getNature().equals(NatureType.Array)) {</span>
+		   int pileAddr;
+<span class="fc bfc" id="L190" title="All 2 branches covered.">		   if(a.getFils2().getNoeud().equals(Noeud.Conversion))</span>
+<span class="fc" id="L191">			   pileAddr = Pile.getAddress(a.getFils2().getFils1().getChaine().toLowerCase());</span>
+		   else
+<span class="fc" id="L193">			   pileAddr = Pile.getAddress(a.getFils2().getChaine().toLowerCase());</span>
+<span class="fc" id="L194">		   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(pileAddr), Operande.opDirect(Registre.R1)));</span>
+		   
+		   //Affectation composée : fils1 = tableau, fils2 = tableau OU conversion /!\
+<span class="fc" id="L197">		   Etiq debutAffect = Etiq.nouvelle(&quot;debutAffectationComposee&quot;);</span>
+<span class="fc" id="L198">		   Etiq finAffect = Etiq.nouvelle(&quot;finAffectationComposee&quot;);</span>
+<span class="fc" id="L199">		   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(sizeArray(type)-1), Operande.opDirect(Registre.R2)));</span>
+<span class="fc" id="L200">		   Prog.ajouter(Inst.creation2(Operation.ADD, Operande.opDirect(Registre.R1), Operande.opDirect(Registre.R2)));</span>
+		   
+		   //R2 contient la dernière adresse du tableau, on va la sauvegarder en pile, pour ré-utiliser R2
+<span class="fc" id="L203">		   int sauvegardeR2 = Pile.allocationTemporaire();</span>
+<span class="fc" id="L204">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R2), Operande.creationOpIndirect(sauvegardeR2, Registre.GB)));</span>
+		   
+<span class="fc" id="L206">		   Prog.ajouter(debutAffect);</span>
+<span class="fc" id="L207">		   Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpIndirect(sauvegardeR2, Registre.GB), Operande.opDirect(Registre.R1)));</span>
+<span class="fc" id="L208">		   Prog.ajouter(Inst.creation1(Operation.BGT, Operande.creationOpEtiq(finAffect)));</span>
+		   
+		   //Si le dernier type est Interval, vérifier les bornes
+<span class="fc" id="L211">		   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpIndexe(0, Registre.GB, Registre.R1), Operande.opDirect(Registre.R2)));</span>
+<span class="fc bfc" id="L212" title="All 2 branches covered.">		   if(getLastType(type).getNature().equals(NatureType.Interval))</span>
+<span class="fc" id="L213">			   Erreur.verifDebordementIntervalle(getLastType(type), Registre.R2);</span>
+		   
+<span class="fc bfc" id="L215" title="All 2 branches covered.">		   if(a.getFils2().getNoeud().equals(Noeud.Conversion)) //S'il y a un noeud conversion =&gt; conversion en Real</span>
+<span class="fc" id="L216">			   Prog.ajouter(Inst.creation2(Operation.FLOAT, Operande.opDirect(Registre.R2), Operande.opDirect(Registre.R2)));</span>
+<span class="fc" id="L217">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R2), Operande.creationOpIndexe(0, Registre.GB, Registre.R0)));</span>
+		   
+		   //On incrémente les adresses des identificateurs à affecter
+<span class="fc" id="L220">		   Prog.ajouter(Inst.creation2(Operation.ADD, Operande.creationOpEntier(1), Operande.opDirect(Registre.R0)));</span>
+<span class="fc" id="L221">		   Prog.ajouter(Inst.creation2(Operation.ADD, Operande.creationOpEntier(1), Operande.opDirect(Registre.R1)));</span>
+
+<span class="fc" id="L223">		   Prog.ajouter(Inst.creation1(Operation.BRA, Operande.creationOpEtiq(debutAffect)));</span>
+		   
+<span class="fc" id="L225">		   Prog.ajouter(finAffect);</span>
+<span class="fc" id="L226">		   Pile.liberationTemporaire();</span>
+		   
+<span class="fc" id="L228">	   } else {</span>
+<span class="fc" id="L229">		   coder_EXP(a.getFils2(), Registre.R1);</span>
+<span class="fc bfc" id="L230" title="All 2 branches covered.">		   if(type.getNature().equals(NatureType.Interval)) {</span>
+<span class="fc" id="L231">			   Erreur.verifDebordementIntervalle(type, Registre.R1);</span>
+		   } 
+<span class="fc" id="L233">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R1), Operande.creationOpIndexe(0,Registre.GB,Registre.R0)));</span>
+	   }
+<span class="fc bfc" id="L235" title="All 2 branches covered.">	   if(r0)	Registres.liberer(Registre.R0);</span>
+<span class="fc bfc" id="L236" title="All 2 branches covered.">	   if(r1)	Registres.liberer(Registre.R1);</span>
+<span class="fc" id="L237">   }</span>
+   
+   private void coder_TantQue(Arbre a) {
+<span class="fc" id="L240">	   boolean r0 = Registres.isFreeReg(Registre.R0);</span>
+<span class="fc" id="L241">	   Registres.reserver(Registre.R0);</span>
+<span class="fc" id="L242">	   Etiq conditionWhile = Etiq.nouvelle(&quot;conditionWhile&quot;);</span>
+<span class="fc" id="L243">	   Etiq debutWhile = Etiq.nouvelle(&quot;debutWhile&quot;);</span>
+	   
+<span class="fc" id="L245">	   Prog.ajouter(Inst.creation1(Operation.BRA, Operande.creationOpEtiq(conditionWhile)));</span>
+<span class="fc" id="L246">	   Prog.ajouter(debutWhile);</span>
+
+<span class="fc" id="L248">	   coder_LISTE_INST(a.getFils2());</span>
+<span class="fc" id="L249">	   Prog.ajouter(conditionWhile);</span>
+<span class="fc" id="L250">	   coder_EXP(a.getFils1(), Registre.R0);</span>
+<span class="fc" id="L251">	   Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpEntier(1), Operande.opDirect(Registre.R0)));</span>
+<span class="fc" id="L252">  	   Prog.ajouter(Inst.creation1(Operation.BEQ, Operande.creationOpEtiq(debutWhile)));</span>
+<span class="fc bfc" id="L253" title="All 2 branches covered.">  	   if(r0)	Registres.liberer(Registre.R0);</span>
+<span class="fc" id="L254">   }</span>
+
+   private void coder_Si(Arbre a) {
+<span class="fc" id="L257">	   boolean r0 = Registres.isFreeReg(Registre.R0);</span>
+<span class="fc" id="L258">	   Registres.reserver(Registre.R0);</span>
+<span class="fc" id="L259">	   Etiq finSi = Etiq.nouvelle(&quot;FinSi&quot;);</span>
+<span class="fc" id="L260">	   coder_EXP(a.getFils1(), Registre.R0);</span>
+<span class="fc" id="L261">	   Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpEntier(1), Operande.opDirect(Registre.R0)));</span>
+<span class="fc bfc" id="L262" title="All 2 branches covered.">	   	if(a.getFils3().getNoeud().equals(Noeud.Vide)) { //If sans else</span>
+<span class="fc" id="L263">	   		Prog.ajouter(Inst.creation1(Operation.BNE, Operande.creationOpEtiq(finSi)));</span>
+<span class="fc" id="L264">	   		coder_LISTE_INST(a.getFils2());</span>
+	   	} else {
+<span class="fc" id="L266">	   		Etiq sinon = Etiq.nouvelle(&quot;Sinon&quot;);</span>
+<span class="fc" id="L267">	   		Prog.ajouter(Inst.creation1(Operation.BNE, Operande.creationOpEtiq(sinon)));</span>
+<span class="fc" id="L268">	   		coder_LISTE_INST(a.getFils2());</span>
+<span class="fc" id="L269">	   		Prog.ajouter(Inst.creation1(Operation.BRA, Operande.creationOpEtiq(finSi)));</span>
+<span class="fc" id="L270">	   		Prog.ajouter(sinon);</span>
+<span class="fc" id="L271">	   		coder_LISTE_INST(a.getFils3());</span>
+	   	}
+<span class="fc" id="L273">	   	Prog.ajouter(finSi);</span>
+<span class="fc bfc" id="L274" title="All 2 branches covered.">	   	if(r0)	Registres.liberer(Registre.R0);</span>
+<span class="fc" id="L275">   }</span>
+
+
+   private void coder_Lecture(Arbre a) {
+<span class="fc" id="L279">	   boolean r0 = Registres.isFreeReg(Registre.R0);</span>
+<span class="fc" id="L280">	   Registres.reserver(Registre.R0);</span>
+<span class="fc" id="L281">	   boolean r1 = Registres.isFreeReg(Registre.R1);</span>
+<span class="fc" id="L282">	   Registres.reserver(Registre.R1);</span>
+<span class="fc" id="L283">	   coder_Place(a, Registre.R0);</span>
+<span class="pc bpc" id="L284" title="1 of 3 branches missed.">	   switch(a.getDecor().getType().getNature()) {</span>
+	   	case Real:
+<span class="fc" id="L286">	   	   Prog.ajouterComment(&quot;Read real&quot;);</span>
+<span class="fc" id="L287">		   Prog.ajouter(Inst.creation0(Operation.RFLOAT));</span>
+<span class="fc" id="L288">		   Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementArithmetique&quot;))));</span>
+<span class="fc" id="L289">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R1), Operande.creationOpIndexe(0, Registre.GB, Registre.R0)));</span>
+<span class="fc" id="L290">		   break;</span>
+	   	case Interval:
+<span class="fc" id="L292">		   Prog.ajouterComment(&quot;Read int&quot;);</span>
+<span class="fc" id="L293">		   Prog.ajouter(Inst.creation0(Operation.RINT));</span>
+<span class="fc" id="L294">		   Prog.ajouter(Inst.creation1(Operation.BOV, Operande.creationOpEtiq(Etiq.lEtiq(&quot;debordementArithmetique&quot;))));</span>
+<span class="fc" id="L295">		   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(Registre.R1), Operande.creationOpIndexe(0, Registre.GB, Registre.R0))); </span>
+<span class="fc" id="L296">		   break;</span>
+	   	default:
+		   break;
+	   }
+<span class="fc bfc" id="L300" title="All 2 branches covered.">	   if(r0)	Registres.liberer(Registre.R0);</span>
+<span class="fc bfc" id="L301" title="All 2 branches covered.">	   if(r1)	Registres.liberer(Registre.R1);</span>
+<span class="fc" id="L302">   }</span>
+   
+   private void coder_Ecriture(Arbre a) {
+<span class="fc bfc" id="L305" title="All 2 branches covered.">	   if(!a.getNoeud().equals(Noeud.Vide)) {</span>
+<span class="fc" id="L306">		   coder_Ecriture(a.getFils1());</span>
+<span class="pc bpc" id="L307" title="1 of 4 branches missed.">		   switch(a.getFils2().getDecor().getType().getNature()) {</span>
+			case String:
+<span class="fc" id="L309">				String str = a.getFils2().getChaine();</span>
+<span class="fc" id="L310">				str = str.substring(1, str.length()-1); //On enlève les guillemets aux extrémités</span>
+<span class="fc" id="L311">				Prog.ajouter(Inst.creation1(Operation.WSTR, Operande.creationOpChaine(str)));</span>
+<span class="fc" id="L312">				break;</span>
+			case Interval:
+<span class="fc" id="L314">				coder_EXP(a.getFils2(), Registre.R1);</span>
+<span class="fc" id="L315">				Prog.ajouter(Inst.creation0(Operation.WINT));</span>
+<span class="fc" id="L316">				break;</span>
+			case Real:
+<span class="fc" id="L318">				coder_EXP(a.getFils2(), Registre.R1);</span>
+<span class="fc" id="L319">				Prog.ajouter(Inst.creation0(Operation.WFLOAT));</span>
+<span class="fc" id="L320">				break;</span>
+			default:
+				break;
+		   }
+	   }  
+<span class="fc" id="L325">   }</span>
+   
+   private void genererUna(Arbre a, Registre reg) {
+<span class="pc bpc" id="L328" title="1 of 5 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case MoinsUnaire:
+<span class="fc" id="L330">		   Prog.ajouter(Inst.creation2(Operation.OPP, Operande.opDirect(reg), Operande.opDirect(reg)));</span>
+<span class="fc" id="L331">		   Erreur.verifDebordementArithmetique();</span>
+<span class="fc" id="L332">		   break;</span>
+	   case PlusUnaire:
+<span class="fc" id="L334">		   break;</span>
+	   case Non:
+<span class="fc" id="L336">		   Prog.ajouter(Inst.creation2(Operation.CMP, Operande.creationOpEntier(0), Operande.opDirect(reg)));</span>
+<span class="fc" id="L337">		   Prog.ajouter(Inst.creation1(Operation.SEQ, Operande.opDirect(reg)));</span>
+<span class="fc" id="L338">		   break;</span>
+	   case Conversion:
+<span class="pc bpc" id="L340" title="1 of 2 branches missed.">		   if(a.getFils1().getDecor().getType().getNature() != NatureType.Array)</span>
+<span class="fc" id="L341">			   Prog.ajouter(Inst.creation2(Operation.FLOAT, Operande.opDirect(reg), Operande.opDirect(reg)));</span>
+		default:
+			break;
+	   }
+<span class="fc" id="L345">   }</span>
+   
+   private void genererBin(Arbre a, Operande operand, Registre regDest) {
+<span class="fc" id="L348">	   Operation operation = null;</span>
+<span class="fc bfc" id="L349" title="All 7 branches covered.">	   switch(a.getNoeud()) {</span>
+<span class="fc" id="L350">	   case DivReel: operation = Operation.DIV;</span>
+<span class="fc bfc" id="L351" title="All 2 branches covered.">	   if (a.getFils2().getDecor().getType().getNature().equals(NatureType.Interval))</span>
+<span class="fc" id="L352">		   Prog.ajouter(Inst.creation2(Operation.FLOAT, Operande.opDirect(regDest), Operande.opDirect(regDest)));</span>
+<span class="fc bfc" id="L353" title="All 2 branches covered.">	   if (a.getFils1().getDecor().getType().getNature().equals(NatureType.Interval)) {</span>
+<span class="fc bfc" id="L354" title="All 2 branches covered.">		   if(operand.getNature().equals(NatureOperande.OpDirect))</span>
+<span class="fc" id="L355">			   Prog.ajouter(Inst.creation2(Operation.FLOAT, operand, operand));</span>
+		   else {
+<span class="fc" id="L357">			   int tmp = Pile.allocationTemporaire();</span>
+<span class="fc" id="L358">			   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(regDest), Operande.creationOpIndirect(tmp, Registre.GB)));</span>
+<span class="fc" id="L359">			   Prog.ajouter(Inst.creation2(Operation.FLOAT, operand, Operande.opDirect(regDest)));</span>
+<span class="fc" id="L360">			   Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(regDest), operand));</span>
+<span class="fc" id="L361">			   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpIndirect(tmp, Registre.GB), Operande.opDirect(regDest)));</span>
+<span class="fc" id="L362">			   Pile.liberationTemporaire();</span>
+<span class="fc" id="L363">		   }</span>
+	   }
+	   break;
+<span class="fc" id="L366">	   case Moins: operation = Operation.SUB; break;</span>
+<span class="fc" id="L367">	   case Plus: operation = Operation.ADD; break;</span>
+<span class="fc" id="L368">	   case Quotient: operation = Operation.DIV; break;</span>
+<span class="fc" id="L369">	   case Reste: operation = Operation.MOD; break;</span>
+<span class="fc" id="L370">	   case Mult: operation = Operation.MUL; break;</span>
+	   default: break;
+	   }
+<span class="fc bfc" id="L373" title="All 2 branches covered.">	   if(operation != null) {</span>
+<span class="fc" id="L374">		   Prog.ajouter(Inst.creation2(operation, operand, Operande.opDirect(regDest)));</span>
+<span class="fc" id="L375">		   Erreur.verifDebordementArithmetique();</span>
+	   } else {
+<span class="pc bpc" id="L377" title="1 of 9 branches missed.">		   switch(a.getNoeud()) {</span>
+		   case Et: //  A ET B &lt;--&gt; (A+B)==2
+<span class="fc" id="L379">			   Prog.ajouterComment(&quot;Operation ET : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L380">			   Prog.ajouter(Inst.creation2(Operation.ADD, operand, Operande.opDirect(regDest)));</span>
+<span class="fc" id="L381">			   Erreur.verifDebordementArithmetique();</span>
+<span class="fc" id="L382">			   operand = Operande.creationOpEntier(2);</span>
+<span class="fc" id="L383">			   operation = Operation.SEQ;</span>
+<span class="fc" id="L384">			   break;</span>
+		   case Ou: // A OU B &lt;---&gt; (A+B) &gt;= 1
+<span class="fc" id="L386">			   Prog.ajouterComment(&quot;Operation OU : &quot; + a.getNumLigne());</span>
+<span class="fc" id="L387">			   Prog.ajouter(Inst.creation2(Operation.ADD, operand, Operande.opDirect(regDest)));</span>
+<span class="fc" id="L388">			   Erreur.verifDebordementArithmetique();</span>
+<span class="fc" id="L389">			   operand = Operande.creationOpEntier(1);</span>
+<span class="fc" id="L390">			   operation = Operation.SGE;</span>
+<span class="fc" id="L391">			   break;</span>
+<span class="fc" id="L392">		   case Inf: operation = Operation.SLT; break;</span>
+<span class="fc" id="L393">		   case InfEgal: operation = Operation.SLE; break;</span>
+<span class="fc" id="L394">		   case Sup: operation = Operation.SGT; break;</span>
+<span class="fc" id="L395">		   case SupEgal: operation = Operation.SGE; break;</span>
+<span class="fc" id="L396">		   case NonEgal: operation = Operation.SNE; break;</span>
+<span class="fc" id="L397">		   case Egal: operation = Operation.SEQ; break;</span>
+		   default: break;
+		   }
+<span class="fc" id="L400">		   Prog.ajouter(Inst.creation2(Operation.CMP, operand, Operande.opDirect(regDest)));</span>
+<span class="fc" id="L401">		   Prog.ajouter(Inst.creation1(operation, Operande.opDirect(regDest)));</span>
+	   }
+<span class="fc" id="L403">   }</span>
+   
+   private void coder_EXP(Arbre a, Registre reg) {
+<span class="pc bpc" id="L406" title="1 of 4 branches missed.">	   switch(a.getArite()) {</span>
+	   		case 0:  //Case F
+<span class="fc" id="L408">   				Prog.ajouterComment(&quot;Chargement, ligne : &quot; + a.getNumLigne());</span>
+<span class="pc bpc" id="L409" title="1 of 6 branches missed.">   				if(a.getDecor().getDefn() != null &amp;&amp; a.getDecor().getDefn().getNature().equals(NatureDefn.Var) &amp;&amp; Pile.containsChaine(a.getChaine().toLowerCase())) {</span>
+<span class="fc" id="L410">   	   				int pileAddr = Pile.getAddress(a.getChaine().toLowerCase());</span>
+<span class="fc" id="L411">   					Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpIndirect(pileAddr,Registre.GB), Operande.opDirect(reg)));</span>
+<span class="fc" id="L412">   				}</span>
+   				else {
+<span class="pc bpc" id="L414" title="1 of 4 branches missed.">   					switch(a.getNoeud()) {</span>
+   					case Ident:
+<span class="fc bfc" id="L416" title="All 2 branches covered.">   						if(a.getChaine().toLowerCase().equals(&quot;true&quot;))</span>
+<span class="fc" id="L417">   							Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(1), Operande.opDirect(reg)));</span>
+<span class="fc bfc" id="L418" title="All 2 branches covered.">   						else if(a.getChaine().toLowerCase().equals(&quot;false&quot;))</span>
+<span class="fc" id="L419">   							Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(0), Operande.opDirect(reg)));</span>
+<span class="pc bpc" id="L420" title="1 of 2 branches missed.">   						else if(a.getChaine().toLowerCase().equals(&quot;max_int&quot;))</span>
+<span class="fc" id="L421">   							Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(java.lang.Integer.MAX_VALUE), Operande.opDirect(reg)));</span>
+   						break;
+   					case Entier:
+<span class="fc" id="L424">   						Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(a.getEntier()), Operande.opDirect(reg)));</span>
+<span class="fc" id="L425">   						break;</span>
+   					case Reel:
+<span class="fc" id="L427">   						Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpReel(a.getReel()), Operande.opDirect(reg)));</span>
+<span class="fc" id="L428">   						break;</span>
+   				    default:
+<span class="nc" id="L430">   				    	break;</span>
+   					}
+   				}
+   				break;
+	   		case 1: //Case OP E1
+<span class="fc" id="L435">	   			coder_EXP(a.getFils1(), reg);</span>
+<span class="fc" id="L436">	   			genererUna(a, reg);</span>
+<span class="fc" id="L437">	   			break;</span>
+	   		case 2: //Case E1 op E2
+<span class="fc bfc" id="L439" title="All 2 branches covered.">	   			if(a.getNoeud().equals(Noeud.Index)) {</span>
+<span class="fc" id="L440">	   				coder_Place(a, reg);</span>
+<span class="fc" id="L441">	   				Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpIndexe(0, Registre.GB, reg), Operande.opDirect(reg)));</span>
+<span class="fc" id="L442">	   				break;</span>
+	   			} else { //Case E1 op E2 (and E2 not leaf)
+<span class="fc bfc" id="L444" title="All 2 branches covered.">	   				if(Registres.isFree()) {</span>
+<span class="fc" id="L445">		   				coder_EXP(a.getFils1(),reg);</span>
+<span class="fc" id="L446">		   				Registre reg2 = Registres.allouerReg();</span>
+<span class="fc" id="L447">		   				coder_EXP(a.getFils2(),reg2);</span>
+<span class="fc" id="L448">		   				genererBin(a,Operande.opDirect(reg2),reg);</span>
+<span class="fc" id="L449">		   				Registres.liberer(reg2);</span>
+<span class="fc" id="L450">		   			}</span>
+		   			else {
+<span class="fc" id="L452">		   				coder_EXP(a.getFils2(),reg);</span>
+<span class="fc" id="L453">		   				int temp = Pile.allocationTemporaire();</span>
+<span class="fc" id="L454">		   				Prog.ajouterComment(&quot;Stockage temp&quot;);</span>
+<span class="fc" id="L455">		   				Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(reg), Operande.creationOpIndirect(temp,Registre.GB)));</span>
+<span class="fc" id="L456">		   				coder_EXP(a.getFils1(),reg);</span>
+<span class="fc" id="L457">		   				genererBin(a,Operande.creationOpIndirect(temp, Registre.GB),reg);</span>
+<span class="fc" id="L458">		   				Pile.liberationTemporaire();</span>
+		   			}
+	   			}
+<span class="fc" id="L461">	   			break;</span>
+	   		default:
+	   			break;//ERREUR
+	   }	
+<span class="fc" id="L465">   }</span>
+   
+   private Type coder_Place(Arbre a, Registre reg) {
+<span class="pc bpc" id="L468" title="1 of 3 branches missed.">	   switch(a.getNoeud()) {</span>
+	   case Ident:
+<span class="fc" id="L470">		   Prog.ajouter(Inst.creation2(Operation.LOAD, Operande.creationOpEntier(Pile.getAddress(a.getChaine().toLowerCase())), Operande.opDirect(reg)));</span>
+<span class="fc" id="L471">		   return a.getDecor().getType();</span>
+	   case Index: //T[i1][i2]...[in]
+<span class="fc" id="L473">		   coder_Place(a.getFils1(), reg); //Calcule l'offset de T[i1][i2]...[in-1] dans le registre.</span>
+<span class="fc" id="L474">		   int size = sizeArray(a.getFils1().getDecor().getType().getElement());</span>
+<span class="fc bfc" id="L475" title="All 2 branches covered.">		   if(Registres.isFree()) {</span>
+<span class="fc" id="L476">			    Registre expReg = Registres.allouerReg();</span>
+<span class="fc" id="L477">		        coder_EXP(a.getFils2(), expReg);</span>
+<span class="fc" id="L478">		        Erreur.verifDebordementIndiceTableau(a.getFils1(), expReg);</span>
+		        
+<span class="fc" id="L480">		        Prog.ajouter(Inst.creation2(Operation.SUB, Operande.creationOpEntier(a.getFils1().getDecor().getType().getIndice().getBorneInf()), Operande.opDirect(expReg)));</span>
+<span class="fc" id="L481">		        Prog.ajouter(Inst.creation2(Operation.MUL, Operande.creationOpEntier(size), Operande.opDirect(expReg)));</span>
+<span class="fc" id="L482">		        Prog.ajouter(Inst.creation2(Operation.ADD, Operande.opDirect(expReg), Operande.opDirect(reg)));</span>
+<span class="fc" id="L483">		        Registres.liberer(expReg);</span>
+<span class="fc" id="L484">		   } else {</span>
+<span class="fc" id="L485">		        int adresseTemporaire = Pile.allocationTemporaire();</span>
+<span class="fc" id="L486">		        Prog.ajouter(Inst.creation2(Operation.STORE, Operande.opDirect(reg), Operande.creationOpIndirect(adresseTemporaire, Registre.GB)));</span>
+<span class="fc" id="L487">		        coder_EXP(a.getFils2(), reg);</span>
+<span class="fc" id="L488">		        Erreur.verifDebordementIndiceTableau(a.getFils1(), reg);</span>
+		        
+<span class="fc" id="L490">		        Prog.ajouter(Inst.creation2(Operation.SUB, Operande.creationOpEntier(a.getFils1().getDecor().getType().getIndice().getBorneInf()), Operande.opDirect(reg)));</span>
+<span class="fc" id="L491">		        Prog.ajouter(Inst.creation2(Operation.MUL, Operande.creationOpEntier(size), Operande.opDirect(reg)));</span>
+<span class="fc" id="L492">		        Prog.ajouter(Inst.creation2(Operation.ADD, Operande.creationOpIndirect(adresseTemporaire,Registre.GB), Operande.opDirect(reg)));</span>
+<span class="fc" id="L493">		        Pile.liberationTemporaire();</span>
+		      }
+<span class="fc" id="L495">		   return a.getDecor().getType();</span>
+	   default:
+<span class="nc" id="L497">		   return null;</span>
+	   }
+   }
+   
+   private int sizeArray(Type type) {
+<span class="fc" id="L502">	   int size = 1;</span>
+<span class="fc bfc" id="L503" title="All 2 branches covered.">	   if(type.getNature() == NatureType.Array) {</span>
+<span class="fc" id="L504">		   size = type.getIndice().getBorneSup() - type.getIndice().getBorneInf()+1;</span>
+<span class="fc" id="L505">		   return sizeArray(type.getElement())*size;</span>
+	   } else {
+<span class="fc" id="L507">		   return size;</span>
+	   }   
+   }
+   
+   private Type getLastType(Type type) {
+<span class="fc bfc" id="L512" title="All 2 branches covered.">	   while(type.getNature().equals(NatureType.Array))</span>
+<span class="fc" id="L513">		   type = type.getElement();</span>
+<span class="fc" id="L514">	  return type;</span>
+   }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>

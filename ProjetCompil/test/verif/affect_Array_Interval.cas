@@ -1,0 +1,10 @@
+program
+	a : array [1 .. 5] of integer;
+	b : integer;
+	i : 1..5;
+begin
+	for i := 1 to 5 do 
+		a[i] := 2;
+	end;
+	b := a[3];
+end.

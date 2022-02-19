@@ -1,0 +1,51 @@
+; ----------------------------------------------------------------------
+; -----------                      Programme généré par JCasc-----------
+; ----------------------------------------------------------------------
+; -----Début de l'allocation d'une variable permanente dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+   ADDSP #1 
+; ------Fin de l'allocation d'une variable permanente dans la pile------
+; ------------------------------Affect : 4------------------------------
+   LOAD #1, R0 
+; ------------------------Chargement, ligne : 4-------------------------
+   LOAD #3, R1 
+; ------------------------Chargement, ligne : 4-------------------------
+   LOAD #2, R14 
+   CMP R14, R1 
+   SLT R1 
+   STORE R1, 0(GB, R0) 
+; --------------------------------Si : 5--------------------------------
+; ------------------------Chargement, ligne : 5-------------------------
+   LOAD 1(GB), R0 
+   CMP #1, R0 
+   BNE sinon.2 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 2(GB) 
+; -----------------------------Ecriture : 6-----------------------------
+   WSTR "3 < 2 ! => true" 
+   LOAD 2(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+   BRA finsi.1 
+sinon.2: 
+; -----Début de l'allocation d'une variable temporaire dans la pile-----
+   TSTO #1 
+   BOV debordementpile 
+; ------Fin de l'allocation d'une variable temporaire dans la pile------
+   STORE R0, 2(GB) 
+; -----------------------------Ecriture : 8-----------------------------
+   WSTR "3 < 2 ! => false" 
+   LOAD 2(GB), R0 
+; ----------Libération d'une variable temporaire dans la pile-----------
+   SUBSP #1 
+finsi.1: 
+; ----------------------------new_line : 10-----------------------------
+   WNL 
+   HALT 
+debordementpile: 
+   WSTR "Erreur - Debordement de pile" 
+   HALT 

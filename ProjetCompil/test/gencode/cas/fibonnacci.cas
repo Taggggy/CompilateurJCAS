@@ -1,0 +1,20 @@
+-- Fonction fibonnaci
+program
+    i : 1 .. 1000;
+    j : 1 .. 1000;
+    tmp : integer;
+    first : integer;
+    second : integer;
+begin
+    for i:=1 to 100 do
+        first := 0;
+        second := 1;
+        for j:=1 to i do
+            tmp := first + second;
+            first := second;
+            second := tmp;
+        end;
+        write("n = ",i," -> ",first);
+        new_line;
+    end;
+end.

@@ -1,0 +1,7 @@
+program
+	a : boolean;
+	b : integer;
+begin
+	a := false;
+	b := +a;
+end.

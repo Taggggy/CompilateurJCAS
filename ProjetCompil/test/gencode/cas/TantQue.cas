@@ -1,0 +1,13 @@
+program
+	a : boolean;
+        i : 1..100;
+begin
+        i := 60;
+	while (i >= 50) do
+	       write(i);
+               new_line;
+               i := i - 1; 
+	end;
+        write("ok : ",i);
+        new_line;
+end.

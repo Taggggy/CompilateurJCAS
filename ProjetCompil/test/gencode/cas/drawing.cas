@@ -1,0 +1,23 @@
+-- Fonction drawing
+program
+    rows,coef,space,i,j : integer;
+begin
+    coef := 1;
+    write("Indiquez le nombre de lignes : ");
+    read(rows);
+    for i:=0 to rows do
+        for space:=1 to (rows-i+1) do
+            write(" ");
+        end;
+        for j:=0 to i do
+            if (j=0) or (i=0) then
+                coef := 1;
+            else
+                coef := coef * (i-j+1) div j;
+            end;
+            write("|",coef);
+        end;
+        write("|");
+        new_line;
+    end;
+end.
